@@ -18,6 +18,10 @@ padEl.addEventListener('click', (e) => {
   const b = e.target.closest('.num');
   if (b && !b.disabled) input(+b.dataset.d, S.notesMode);
 });
+// Mac keyboards label Backspace as "delete", so match the tooltip to the user's keyboard.
+if (/mac/i.test(navigator.userAgentData?.platform ?? navigator.platform)) {
+  $('[data-tool="erase"]').title = 'Erase (Delete)';
+}
 // Keep keyboard focus on the page when clicking tool buttons with a mouse.
 document.querySelector('.panel').addEventListener('mousedown', (e) => {
   if (e.target.closest('.tool, .num')) e.preventDefault();
