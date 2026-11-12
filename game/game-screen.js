@@ -25,7 +25,7 @@ for (let d = 1; d <= 9; d++) {
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'num'; b.dataset.d = d;
   b.setAttribute('aria-label', 'Enter ' + d);
-  b.innerHTML = `<b>${d}</b><small></small>`;
+  b.innerHTML = `<b>${d}</b>`;
   padEl.appendChild(b);
   padBtns.push(b);
 }
@@ -81,8 +81,10 @@ function render() {
   $('#mult').textContent = '×' + DIFFS[S.diff].mult;
   $('#scoreStat').hidden = !!S.practice;
   const tag = $('#practiceTag');
-  tag.hidden = !S.practice;
+  const missed = PRACTICE_NAMES[S.missed] ? S.missed : '';
+  tag.hidden = !S.practice && !missed;
   if (S.practice) tag.innerHTML = `Practice: <b>${PRACTICE_NAMES[S.practice]}</b>. This puzzle needs it. <a href="../learn/learn.html#${S.practice}">Back to the lesson</a>`;
+  else if (missed) tag.innerHTML = `No puzzle that needs <b>${PRACTICE_NAMES[missed]}</b> turned up in time, so this is a regular ${DIFFS[S.diff].label} game. <a href="../learn/learn.html#${missed}">Back to the lesson</a>`;
   $('#hardest').textContent = S.busy || !S.hardest ? '–' : S.hardest;
   renderTime();
   pauseBtn.innerHTML = icon(S.paused ? 'play' : 'pause');
@@ -101,12 +103,11 @@ function render() {
   $('#hintBadge').textContent = String(S.hints);
   $('#giveBtn').disabled = S.status !== 'playing' || S.busy;
 
-  // Number pad: remaining count per digit
+  // Number pad: a digit's button disappears once all nine are placed
   const placed = new Array(10).fill(0);
   for (let i = 0; i < 81; i++) if (S.values[i] && S.values[i] === S.solution[i]) placed[S.values[i]]++;
   padBtns.forEach((b, k) => {
     const left = 9 - placed[k + 1];
-    b.querySelector('small').textContent = left > 0 ? left : '';
     b.disabled = !act || left <= 0;
     b.classList.toggle('done', left <= 0);
   });
@@ -132,8 +133,10 @@ function renderTime() { $('#time').textContent = fmt(S.seconds); }
 
 function renderVeil() {
   const kind = S.busy ? 'busy' : S.paused ? 'pause' : S.status === 'failed' ? 'failed' : '';
-  if (kind === veilKind) return;
-  veilKind = kind;
+  // The "setting up" message names the level, so redraw it if the level changes mid-search.
+  const key = kind === 'busy' ? 'busy:' + S.diff : kind;
+  if (key === veilKind) return;
+  veilKind = key;
   if (!kind) { veil.hidden = true; return; }
   veil.hidden = false;
   const btn = (act, label, primary) => `<button type="button" class="btn${primary ? ' primary' : ''}" data-act="${act}">${label}</button>`;

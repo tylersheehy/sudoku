@@ -37,7 +37,6 @@ $('#confirmYes').addEventListener('click', () => { const fn = pending; closeAsk(
 
 $('#scoresBtn').addEventListener('click', openScores);
 $('#scoresClose').addEventListener('click', closeScores);
-scoresModal.addEventListener('click', (e) => { if (e.target === scoresModal) closeScores(); });
 $('#scoreFilter').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-f]');
   if (b) { scoreFilter = b.dataset.f; renderScores(); }
@@ -66,8 +65,7 @@ function move(key) {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (newMenu.open) return; // the menu handles its own keys (Tab, Enter, Esc)
-  if (!scoresModal.hidden) { if (e.key === 'Escape') closeScores(); return; }
+  if (newMenu.open || scoresModal.open) return; // these windows handle their own keys (Tab, Enter, Esc)
   if (e.metaKey || e.ctrlKey || e.altKey) {
     if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
     return;
@@ -82,6 +80,7 @@ document.addEventListener('keydown', (e) => {
   if (S.busy) return;
   if (S.paused) { if (k === 'p' || k === 'P') pause(false); return; }
   if (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight') { e.preventDefault(); move(k); return; }
+  if (e.repeat) return; // a held-down key only counts once (otherwise holding H would use every hint)
   const m = /^(?:Digit|Numpad)([0-9])$/.exec(e.code);
   if (m) {
     e.preventDefault();
@@ -117,13 +116,15 @@ setInterval(() => {
   const wanted = (/^#practice=([a-z-]+)$/.exec(location.hash) || [])[1];
   const level = (/^#new=([a-z]+)$/.exec(location.hash) || [])[1];
   if (wanted || level) { try { history.replaceState(null, '', location.pathname); } catch (e) { /* ignore */ } }
+  if (level && DIFFS[level]) { newGame(level); return; } // the home page has already warned about a saved game
+  const saved = await load();
+  if (saved) { S = saved; render(); save(); }
   if (wanted && TYPE_LEVEL[wanted]) {
-    newGame(Object.keys(DIFFS).find((k) => DIFFS[k].level === TYPE_LEVEL[wanted]), wanted);
-  } else if (level && DIFFS[level]) {
-    newGame(level);
-  } else {
-    const saved = await load();
-    if (saved) { S = saved; render(); save(); }
-    else newGame('medium');
+    const start = () => newGame(Object.keys(DIFFS).find((k) => DIFFS[k].level === TYPE_LEVEL[wanted]), wanted);
+    // Coming from a lesson: don't replace a game in progress without asking.
+    if (saved && hasProgress()) ask(`Start a ${PRACTICE_NAMES[wanted]} practice puzzle? Your current game will be lost.`, 'Start practice', start);
+    else start();
+  } else if (!saved) {
+    newGame('medium');
   }
 })();

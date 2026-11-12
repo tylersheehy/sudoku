@@ -28,7 +28,10 @@ Full keyboard play: arrow keys, digits, and single-key shortcuts for every tool
 Step-by-step replays that show each technique unfold on the board
 Unlimited new examples for every technique
 A "basics" lesson that explains Sudoku words like box, unit and candidate, with definitions one click away in every lesson
-<!-- The last three lines are new in 1.0.1; remove them if submitting 1.0.0 again. -->
+A home page to start a new game, continue your saved one, and see your top scores
+A statistics page with games started, games won, win rate, best score and times for every difficulty
+A paper theme and a dark theme
+<!-- The last six lines are new in 1.0.1; remove them if submitting 1.0.0 again. -->
 
 How to use:
 1. Click the Sudoku for Fun icon in your toolbar, or press Alt+Shift+S.
@@ -36,7 +39,7 @@ How to use:
 3. Open "Learn techniques" to work through the lessons.
 
 Privacy:
-Sudoku for Fun works entirely offline. Your game in progress, high scores and lesson progress are stored only on your device. Nothing is collected or sent anywhere.
+Sudoku for Fun works entirely offline. Your game in progress, high scores, statistics and lesson progress are stored only on your device. Nothing is collected or sent anywhere.
 
 Support:
 Report issues at https://github.com/tylersheehy/sudoku/issues
@@ -73,7 +76,7 @@ Tip: set the browser window to 1280×800 (DevTools device toolbar → Responsive
 
 | Permission | Type | Justification |
 |------------|------|---------------|
-| storage | permissions | Saves the user's game in progress, high-score list and completed lessons on their device, so a puzzle can be resumed after closing the tab and progress is kept between sessions. Nothing is synced or transmitted. |
+| storage | permissions | Saves the user's game in progress, high-score list, play statistics and completed lessons on their device, so a puzzle can be resumed after closing the tab and progress is kept between sessions. Nothing is synced or transmitted. |
 
 No host permissions are requested. The extension has no content scripts and does not read or change any website.
 
@@ -115,7 +118,7 @@ Last updated: 2026-11-11
 
 Sudoku for Fun does not collect, store on any server, or transmit any personal data or browsing information.
 
-The extension saves your game in progress, your high scores and which lessons you have completed. This data is stored only on your device, in the browser's extension storage, and is used only to resume your game and show your progress. It is never sent anywhere.
+The extension saves your game in progress, your high scores, your play statistics (such as games started and won), which lessons you have completed and your choice of theme. This data is stored only on your device, in the browser's extension storage, and is used only to resume your game and show your progress. It is never sent anywhere.
 
 This extension does not use cookies, analytics, advertising or any third-party services, and it does not read or change the websites you visit.
 

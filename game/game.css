@@ -20,7 +20,6 @@
 /* Header: small title, difficulty as plain text tabs */
 .top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
 h1 { margin: 0; font: 700 22px/1.1 var(--font-print); color: var(--ink); letter-spacing: 0.01em; }
-h1 span { font-weight: 400; }
 .seg { display: flex; flex-wrap: wrap; gap: 2px 18px; }
 .seg button {
   border: 0; background: transparent;
@@ -35,7 +34,6 @@ h1 span { font-weight: 400; }
 .status { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 22px; }
 .stat { display: flex; align-items: baseline; gap: 6px; }
 .k { font-size: 14px; color: var(--muted); }
-.k::after { content: ""; }
 .val { font: 600 16px/1.2 var(--font-num); font-variant-numeric: tabular-nums; color: var(--ink); }
 .val.small { font-size: 14px; font-weight: 500; }
 .icon-btn {
@@ -189,7 +187,6 @@ h1 span { font-weight: 400; }
   color: var(--pen);
 }
 .num b { font: 400 40px/1 var(--font-num); }
-.num small { display: none; }
 .num:hover:not(:disabled) { background: var(--accent-soft); }
 .num:disabled { opacity: 0.35; }
 .num.done { visibility: hidden; }
@@ -242,23 +239,18 @@ kbd {
 }
 @keyframes gain-pop { from { opacity: 0; transform: translateY(4px); } 15% { opacity: 1; transform: none; } 75% { opacity: 1; } to { opacity: 0; } }
 
-/* High scores */
-.modal {
-  position: fixed; inset: 0; z-index: 10;
-  display: grid; place-items: center;
-  padding: 16px;
-  background: rgba(8, 12, 20, 0.55);
-}
+/* High scores: a <dialog>, which the browser centres and dims the page behind */
 .sheet {
-  width: min(100%, 520px);
-  max-height: 100%;
+  width: min(100% - 32px, 520px);
+  max-height: calc(100% - 32px);
   overflow: auto;
-  display: grid; gap: 12px;
   padding: 16px;
-  background: var(--surface);
-  border-radius: 14px;
+  border: 0; border-radius: 14px;
+  background: var(--surface); color: var(--ink);
   box-shadow: var(--shadow);
 }
+.sheet[open] { display: grid; gap: 12px; } /* only when open, or it would never hide */
+.sheet::backdrop { background: rgba(8, 12, 20, 0.55); }
 .sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .sheet-head h2 { margin: 0; font: 700 20px/1.1 var(--font-print); }
 .sheet-head .icon-btn { margin: 0; font-size: 22px; line-height: 1; }
@@ -267,5 +259,5 @@ kbd {
 /* Practice and Learn link */
 .ptag { margin: 0; padding: 10px 14px; border-radius: 8px; background: var(--accent-soft); font-weight: 500; }
 .ptag a { color: var(--accent); font-weight: 600; }
-.actions a.btn { text-decoration: none; text-align: center; display: block; }
 /* Rows: New game (full width), then Give up | High scores, then Home | Learn techniques */
+.actions a.btn { text-decoration: none; text-align: center; display: block; }

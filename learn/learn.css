@@ -1,4 +1,4 @@
-/* Learn page. Tokens come from game.css; these add the highlight colors used by the lesson board. */
+/* Learn page. Colours, fonts and buttons come from shared/theme.css; these add the highlight colors used by the lesson board. */
 :root {
   /* Highlighter on newsprint */
   --wing: #f1dc8c;

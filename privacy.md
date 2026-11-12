@@ -10,7 +10,7 @@ Sudoku for Fun does not collect, store on any server, or transmit any personal d
 
 ## What is saved
 
-The extension saves your game in progress, your high scores and which lessons you have completed. This data is stored only on your device, in the browser's extension storage, and is used only to resume your game and show your progress. It is never sent anywhere.
+The extension saves your game in progress, your high scores, your play statistics (such as games started and won), which lessons you have completed and your choice of theme. This data is stored only on your device, in the browser's extension storage, and is used only to resume your game and show your progress. It is never sent anywhere.
 
 ## Third parties
 

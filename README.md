@@ -40,7 +40,7 @@ sudoku/
 │   ├── lessons-data.js    the first (hand-checked) example puzzle for each lesson
 │   └── learn.js           how the lesson page works, including the replay (loads last)
 │
-├── shared/            Used by both pages
+├── shared/            Used by more than one page
 │   ├── theme.css          colours, fonts, buttons, menus and score lists (paper and dark themes)
 │   ├── theme.js           the paper / dark switch
 │   ├── save-data.js       saving games, scores and progress on your computer

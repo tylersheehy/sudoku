@@ -50,6 +50,8 @@ const TYPE_LEVEL = {
   'naked-triple': 4, 'hidden-triple': 4, 'x-wing': 4,
   'xy-wing': 5, 'swordfish': 5, 'forcing': 6,
 };
+// The hardest techniques need rare puzzles, so they get longer to search (in milliseconds).
+const PRACTICE_BUDGET_MS = { 'xy-wing': 15000, 'swordfish': 15000, 'forcing': 15000 };
 async function generatePractice(type, budgetMs) {
   const diff = Object.keys(DIFFS).find((k) => DIFFS[k].level === TYPE_LEVEL[type]);
   const t0 = Date.now();

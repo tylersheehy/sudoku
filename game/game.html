@@ -78,7 +78,7 @@
       <div class="actions">
         <button type="button" class="btn primary" id="newBtn">New game</button>
         <button type="button" class="btn" id="giveBtn">Give up</button>
-        <button type="button" class="btn wide" id="scoresBtn">High scores</button>
+        <button type="button" class="btn" id="scoresBtn">High scores</button>
         <a class="btn" id="homeLink" href="../home/home.html">Home</a>
         <a class="btn" id="learnBtn" href="../learn/learn.html">Learn techniques</a>
       </div>
@@ -101,25 +101,23 @@
 
   </div>
 </main>
-<div class="modal" id="scoresModal" hidden>
-  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="scoresTitle">
-    <div class="sheet-head">
-      <h2 id="scoresTitle">High scores</h2>
-      <button type="button" class="icon-btn" id="scoresClose" aria-label="Close high scores">&times;</button>
-    </div>
-    <div class="chips" id="scoreFilter" role="group" aria-label="Filter by difficulty">
-      <button type="button" data-f="all" aria-pressed="true">All</button>
-      <button type="button" data-f="easy" aria-pressed="false">Easy</button>
-      <button type="button" data-f="medium" aria-pressed="false">Medium</button>
-      <button type="button" data-f="hard" aria-pressed="false">Hard</button>
-      <button type="button" data-f="expert" aria-pressed="false">Expert</button>
-      <button type="button" data-f="evil" aria-pressed="false">Evil</button>
-      <button type="button" data-f="insane" aria-pressed="false">Insane</button>
-    </div>
-    <ol class="scorelist" id="scoreList"></ol>
-    <p class="rules">Each cell scores 10 points on the first try, 3 on the second and 1 on the third, then nothing. Hinted cells score nothing. The total is multiplied by the level: Easy ×1, Medium ×1.5, Hard ×2, Expert ×3, Evil ×4, Insane ×5. Only solved rounds are listed.</p>
+<dialog class="sheet" id="scoresModal" closedby="any" aria-labelledby="scoresTitle">
+  <div class="sheet-head">
+    <h2 id="scoresTitle">High scores</h2>
+    <button type="button" class="icon-btn" id="scoresClose" aria-label="Close high scores">&times;</button>
   </div>
-</div>
+  <div class="chips" id="scoreFilter" role="group" aria-label="Filter by difficulty">
+    <button type="button" data-f="all" aria-pressed="true">All</button>
+    <button type="button" data-f="easy" aria-pressed="false">Easy</button>
+    <button type="button" data-f="medium" aria-pressed="false">Medium</button>
+    <button type="button" data-f="hard" aria-pressed="false">Hard</button>
+    <button type="button" data-f="expert" aria-pressed="false">Expert</button>
+    <button type="button" data-f="evil" aria-pressed="false">Evil</button>
+    <button type="button" data-f="insane" aria-pressed="false">Insane</button>
+  </div>
+  <ol class="scorelist" id="scoreList"></ol>
+  <p class="rules">Each cell scores 10 points on the first try, 3 on the second and 1 on the third, then nothing. Hinted cells score nothing. The total is multiplied by the level: Easy ×1, Medium ×1.5, Hard ×2, Expert ×3, Evil ×4, Insane ×5. Only solved rounds are listed.</p>
+</dialog>
 <dialog class="menu" id="newMenu" closedby="any" aria-labelledby="newMenuTitle">
   <form method="dialog">
     <h2 id="newMenuTitle">New game</h2>

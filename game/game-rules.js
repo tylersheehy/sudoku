@@ -30,6 +30,7 @@ const fresh = (diff) => ({
   mistakes: 0, hints: 3, seconds: 0, paused: false, busy: true,
   status: 'playing', unlimited: false, clues: 0, hardest: '',
   score: 0, tries: zeros(), awarded: zeros(), entryId: '', rank: 0, practice: '',
+  missed: '', // a practice technique that was asked for but no puzzle needing it was found in time
 });
 let S = fresh('medium');
 
@@ -116,6 +117,13 @@ function undo() {
   const h = S.history.pop();
   S.values = h.v;
   S.notes = h.n;
+  // Hints are spent for good: a hinted cell stays filled in, so undo can't waste the hint.
+  for (let i = 0; i < 81; i++) {
+    if (!S.hinted[i]) continue;
+    S.values[i] = S.solution[i];
+    S.notes[i] = 0;
+    clearPeerNotes(i, S.solution[i]);
+  }
   render();
   save();
 }
@@ -129,8 +137,7 @@ function hint() {
     if (!open.length) return;
     i = open[(Math.random() * open.length) | 0];
   }
-  snapshot();
-  S.hints--;
+  S.hints--; // no undo step is saved: a hint can't be taken back
   S.values[i] = S.solution[i];
   S.notes[i] = 0;
   S.hinted[i] = 1;
@@ -174,12 +181,13 @@ async function newGame(diff, practice) {
   S = fresh(diff);
   render();
   const token = ++genToken;
-  const g = practice ? await generatePractice(practice, 8000) : await generate(diff, DIFFS[diff].budget);
+  const g = practice ? await generatePractice(practice, PRACTICE_BUDGET_MS[practice] || 8000) : await generate(diff, DIFFS[diff].budget);
   if (token !== genToken) return;
   S = Object.assign(fresh(g.diff || diff), {
     puzzle: g.puzzle, solution: g.solution, values: g.puzzle.slice(),
     clues: g.clues, hardest: g.rating.hardest, busy: false,
     practice: practice && g.hit ? practice : '',
+    missed: practice && !g.hit ? practice : '',
   });
   // Count the game as started for the statistics (practice games from the lessons don't count, as with scores).
   if (!S.practice) { addStart(stats, S.diff); storeSet(SAVE_KEYS.stats, stats); }
@@ -194,11 +202,13 @@ function ask(msg, yes, fn) {
   $('#confirmMsg').textContent = msg;
   $('#confirmYes').textContent = yes;
   confirmEl.hidden = false;
+  confirmEl.scrollIntoView({ block: 'nearest' }); // on narrow windows the bar sits below the board
   $('#confirmYes').focus({ preventScroll: true });
 }
 function closeAsk() { pending = null; confirmEl.hidden = true; }
 
-const hasProgress = () => S.status === 'playing' && S.history.length > 0;
+// A game stopped at three mistakes can still be carried on, so it counts as progress too.
+const hasProgress = () => (S.status === 'playing' || S.status === 'failed') && (S.history.length > 0 || S.hints < 3);
 function startNew(diff) {
   if (hasProgress()) ask(`Start a new ${DIFFS[diff].label} game? Your current progress will be lost.`, 'New game', () => newGame(diff));
   else newGame(diff);

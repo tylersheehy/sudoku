@@ -33,7 +33,8 @@ enableLightDismiss(menu);
 
 /* ---------- Continue ---------- */
 function showContinue(g) {
-  const ok = g && DIFFS[g.diff] && g.status === 'playing' && Array.isArray(g.values) && g.values.length === 81;
+  // A game stopped at three mistakes can still be carried on, so it is offered too.
+  const ok = g && DIFFS[g.diff] && (g.status === 'playing' || g.status === 'failed') && Array.isArray(g.values) && g.values.length === 81;
   saved = ok ? g : null;
   $('#continue').hidden = !ok;
   if (!ok) return;

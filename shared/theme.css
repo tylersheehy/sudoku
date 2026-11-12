@@ -1,5 +1,5 @@
 /* Shared look for every page: colours, fonts, the theme button, page basics and buttons.
-   Each page then adds its own stylesheet (game/game.css, learn/learn.css). */
+   Each page then adds its own stylesheet (home/home.css, game/game.css, learn/learn.css, stats/stats.css). */
 /* Theme: newspaper paper by default. theme.js sets <meta name="color-scheme"> to "dark" when the
    user switches, and the :has() rule below swaps the tokens. Without JS the page stays paper. */
 :root {
@@ -95,7 +95,7 @@ h1, h2 { margin: 0; }
 .btn:disabled { opacity: 0.4; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); }
 .btn.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.08); }
-.btn.danger { background: var(--bad); color: #fff; }
+.btn.danger { background: var(--bad); color: var(--surface); } /* readable on the red of both themes */
 
 /* High-score list and its filter chips (game window and home page) */
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }

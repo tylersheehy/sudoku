@@ -61,15 +61,17 @@ function renderScores() {
     scoreList.appendChild(li);
   });
 }
+// The window is a browser <dialog>, which handles Esc, keeping Tab inside, and returning focus.
 function openScores() {
+  if (scoresModal.open) return;
   closeAsk();
   modalWasPlaying = active();
   if (modalWasPlaying) { S.paused = true; render(); }
   renderScores();
-  scoresModal.hidden = false;
-  $('#scoresClose').focus({ preventScroll: true });
+  scoresModal.showModal();
 }
-function closeScores() {
-  scoresModal.hidden = true;
+function closeScores() { scoresModal.close(); }
+scoresModal.addEventListener('close', () => {
   if (modalWasPlaying) { modalWasPlaying = false; pause(false); }
-}
+});
+enableLightDismiss(scoresModal); // clicking outside the window closes it

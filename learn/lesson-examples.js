@@ -3,14 +3,12 @@
 'use strict';
 
 const SINGLE_TYPES = ['naked-single', 'hidden-single'];
-// The hardest techniques need rare puzzles, so they get longer to search.
-const EXAMPLE_BUDGET_MS = { 'xy-wing': 15000, 'swordfish': 15000, 'forcing': 15000 };
 
 // Returns a new example (same shape as the ones in lessons-data.js), or null if none was found in time.
 async function makeExample(type, previous) {
   // Let the "Finding an example" message paint before the first (blocking) search.
   await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
-  const budget = EXAMPLE_BUDGET_MS[type] || 6000;
+  const budget = PRACTICE_BUDGET_MS[type] || 6000; // the longer times for rare techniques are in puzzle-maker.js
   const t0 = Date.now();
   while (Date.now() - t0 < budget) {
     const made = await generatePractice(type, budget - (Date.now() - t0));
