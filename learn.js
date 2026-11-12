@@ -175,8 +175,7 @@ function marks(ex) {
 
 /* ---------- Progress ---------- */
 let done = {};
-try { done = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { done = {}; }
-const saveDone = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) { /* storage unavailable */ } };
+const saveDone = () => storeSet(KEY, done);
 
 /* ---------- State ---------- */
 let idx = 0, ex = null, MK = null;
@@ -409,5 +408,9 @@ window.addEventListener('hashchange', () => {
   const id = decodeURIComponent(location.hash.slice(1));
   if (LESSONS[idx].id !== id) fromHash();
 });
-fromHash();
+(async () => {
+  const stored = await storeGet(KEY);
+  done = stored && typeof stored === 'object' ? stored : {};
+  fromHash();
+})();
 })();

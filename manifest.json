@@ -1,10 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Sudoku",
+  "name": "Sudoku for Fun",
   "version": "1.0.0",
-  "description": "Sudoku in its own tab: five difficulty levels, notes, hints, undo, pause, scoring, and full keyboard play.",
+  "description": "Sudoku in its own tab: six difficulty levels, notes, hints, undo, pause, scoring, and full keyboard play.",
+  "minimum_chrome_version": "116",
+  "permissions": ["storage"],
   "action": {
-    "default_title": "Play Sudoku"
+    "default_title": "Play Sudoku",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
   },
   "background": {
     "service_worker": "background.js"

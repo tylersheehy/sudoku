@@ -46,13 +46,12 @@ const fmt = (s) => {
 
 function save() {
   if (S.busy) return;
-  try {
-    localStorage.setItem(KEY, JSON.stringify(Object.assign({}, S, { history: S.history.slice(-100), busy: false })));
-  } catch (e) { /* storage unavailable */ }
+  // Round-trip through JSON so the stored copy matches what JSON would keep.
+  storeSet(KEY, JSON.parse(JSON.stringify(Object.assign({}, S, { history: S.history.slice(-100), busy: false }))));
 }
-function load() {
+async function load() {
   try {
-    const o = JSON.parse(localStorage.getItem(KEY));
+    const o = await storeGet(KEY);
     const ok = o && DIFFS[o.diff] && ['puzzle', 'solution', 'values', 'notes'].every((k) => Array.isArray(o[k]) && o[k].length === 81);
     if (!ok) return null;
     return Object.assign(fresh(o.diff), o, { busy: false, paused: o.status === 'playing' && o.seconds > 0 });
@@ -252,10 +251,10 @@ function startNew(diff) {
 
 /* ---------- Score and high scores ---------- */
 let scores = [];
-try {
-  const raw = JSON.parse(localStorage.getItem(SCORES));
-  if (Array.isArray(raw)) scores = raw.filter((e) => e && DIFFS[e.diff] && Number.isFinite(e.score));
-} catch (e) { scores = []; }
+async function loadScores() {
+  const raw = await storeGet(SCORES);
+  scores = Array.isArray(raw) ? raw.filter((e) => e && DIFFS[e.diff] && Number.isFinite(e.score)) : [];
+}
 
 const total = () => Math.round(S.score * DIFFS[S.diff].mult);
 
@@ -268,7 +267,7 @@ function recordScore() {
   scores.push(entry);
   scores.sort((a, b) => b.score - a.score || a.seconds - b.seconds);
   scores = scores.slice(0, 50);
-  try { localStorage.setItem(SCORES, JSON.stringify(scores)); } catch (e) { /* storage unavailable */ }
+  storeSet(SCORES, scores);
   S.entryId = entry.id;
   return scores.findIndex((x) => x.id === entry.id) + 1;
 }
@@ -551,13 +550,16 @@ setInterval(() => {
 
 /* ---------- Boot ---------- */
 // Opened from a lesson: learn.html links here with #practice=<technique>.
-const wanted = (/^#practice=([a-z-]+)$/.exec(location.hash) || [])[1];
-if (wanted && TYPE_LEVEL[wanted]) {
-  try { history.replaceState(null, '', location.pathname); } catch (e) { /* ignore */ }
-  newGame(Object.keys(DIFFS).find((k) => DIFFS[k].level === TYPE_LEVEL[wanted]), wanted);
-} else {
-  const saved = load();
-  if (saved) { S = saved; render(); save(); }
-  else newGame('medium');
-}
+(async () => {
+  await loadScores();
+  const wanted = (/^#practice=([a-z-]+)$/.exec(location.hash) || [])[1];
+  if (wanted && TYPE_LEVEL[wanted]) {
+    try { history.replaceState(null, '', location.pathname); } catch (e) { /* ignore */ }
+    newGame(Object.keys(DIFFS).find((k) => DIFFS[k].level === TYPE_LEVEL[wanted]), wanted);
+  } else {
+    const saved = await load();
+    if (saved) { S = saved; render(); save(); }
+    else newGame('medium');
+  }
+})();
 })();
