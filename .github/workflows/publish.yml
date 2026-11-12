@@ -1,0 +1,110 @@
+# Publishes the extension to the Chrome Web Store.
+#
+# Runs only when you push a version tag (e.g. v1.0.1) or start it by hand from the Actions tab.
+# It never runs on pull requests, so code from forks can't reach the secrets.
+#
+# Setup (one time) - see RUNNING_LOCALLY.md "Automatic publishing":
+#   Settings > Environments > New environment "chrome-web-store", add yourself as Required reviewer,
+#   then add these environment secrets:
+#     CWS_SERVICE_ACCOUNT_JSON  full contents of the service account JSON key
+#     CWS_PUBLISHER_ID          Developer Dashboard > Account/Publisher settings
+#     CWS_EXTENSION_ID          the item ID shown in the dashboard
+name: Publish to Chrome Web Store
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chrome-web-store
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: chrome-web-store
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Check tag matches manifest version
+        id: version
+        run: |
+          version=$(jq -r .version manifest.json)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_REF_TYPE" = "tag" ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match manifest.json version $version (expected v$version)."
+            exit 1
+          fi
+          echo "Publishing version $version"
+
+      - name: Build package
+        shell: pwsh
+        run: ./package.ps1
+
+      - name: Get access token
+        id: token
+        env:
+          SA_JSON: ${{ secrets.CWS_SERVICE_ACCOUNT_JSON }}
+        run: |
+          set -euo pipefail
+          b64url() { openssl base64 -A | tr '+/' '-_' | tr -d '='; }
+          key_file=$(mktemp); trap 'rm -f "$key_file"' EXIT
+          jq -r .private_key <<<"$SA_JSON" > "$key_file"
+          email=$(jq -r .client_email <<<"$SA_JSON")
+          now=$(date +%s)
+          header=$(printf '{"alg":"RS256","typ":"JWT"}' | b64url)
+          claims=$(jq -cn --arg iss "$email" --argjson iat "$now" --argjson exp "$((now + 600))" \
+            '{iss:$iss, scope:"https://www.googleapis.com/auth/chromewebstore", aud:"https://oauth2.googleapis.com/token", iat:$iat, exp:$exp}' | b64url)
+          sig=$(printf '%s.%s' "$header" "$claims" | openssl dgst -sha256 -sign "$key_file" | b64url)
+          token=$(curl -sS --fail-with-body https://oauth2.googleapis.com/token \
+            -d grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer \
+            -d assertion="$header.$claims.$sig" | jq -r .access_token)
+          if [ -z "$token" ] || [ "$token" = "null" ]; then echo "::error::Could not get an access token."; exit 1; fi
+          echo "::add-mask::$token"
+          echo "token=$token" >> "$GITHUB_OUTPUT"
+
+      - name: Upload package
+        env:
+          TOKEN: ${{ steps.token.outputs.token }}
+          PUBLISHER: ${{ secrets.CWS_PUBLISHER_ID }}
+          ITEM: ${{ secrets.CWS_EXTENSION_ID }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          base="https://chromewebstore.googleapis.com"
+          name="publishers/$PUBLISHER/items/$ITEM"
+          res=$(curl -sS --fail-with-body -X POST "$base/upload/v2/$name:upload" \
+            -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/zip" \
+            --data-binary "@dist/sudoku-$VERSION.zip")
+          echo "$res" | jq '{uploadState, crxVersion}'
+          state=$(jq -r '.uploadState // empty' <<<"$res")
+          # Large uploads are processed asynchronously; poll until done.
+          for i in $(seq 1 30); do
+            [ "$state" = "UPLOAD_IN_PROGRESS" ] || break
+            sleep 10
+            state=$(curl -sS --fail-with-body "$base/v2/$name:fetchStatus" -H "Authorization: Bearer $TOKEN" \
+              | jq -r '.lastAsyncUploadState // empty')
+            echo "Upload state: $state"
+          done
+          case "$state" in
+            *FAIL*|UPLOAD_IN_PROGRESS) echo "::error::Upload did not succeed (state: $state)."; exit 1 ;;
+          esac
+
+      - name: Submit for review
+        env:
+          TOKEN: ${{ steps.token.outputs.token }}
+          PUBLISHER: ${{ secrets.CWS_PUBLISHER_ID }}
+          ITEM: ${{ secrets.CWS_EXTENSION_ID }}
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body -X POST \
+            "https://chromewebstore.googleapis.com/v2/publishers/$PUBLISHER/items/$ITEM:publish" \
+            -H "Authorization: Bearer $TOKEN" | jq '{state}'
+          echo "Submitted. Track the review in the Chrome Web Store Developer Dashboard."

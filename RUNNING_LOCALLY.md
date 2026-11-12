@@ -44,6 +44,34 @@ This creates `dist/sudoku-<version>.zip` containing only the files Chrome needs.
 
 Requires Chrome 116 or later.
 
+## Automatic publishing (GitHub Actions)
+
+[.github/workflows/publish.yml](.github/workflows/publish.yml) uploads a new version and submits it for review when you push a version tag. Credentials live only in GitHub's encrypted secrets, never in the repo.
+
+### One-time setup
+
+1. **Google Cloud:** create a project, enable the **Chrome Web Store API**, and create a **service account** (no roles needed). Under the account's **Keys** tab, create a JSON key. It downloads a file; save it **outside** this project folder.
+2. **Developer Dashboard:** in **Account**, add the service account's email (only one is allowed). Note your **Publisher ID** and the extension's **item ID**.
+3. **GitHub:** in the repo, go to **Settings → Environments → New environment**, name it `chrome-web-store`, and tick **Required reviewers** (add yourself). In that environment, add the secrets:
+   - `CWS_SERVICE_ACCOUNT_JSON`: paste the entire JSON key file contents
+   - `CWS_PUBLISHER_ID`
+   - `CWS_EXTENSION_ID`
+4. Delete the downloaded JSON key file from your computer.
+
+### Releasing a new version
+
+1. Bump `version` in `manifest.json` (e.g. `1.0.1`), commit and push to `main`.
+2. Tag and push the tag:
+   ```
+   git tag v1.0.1
+   git push origin v1.0.1
+   ```
+3. On GitHub, open **Actions → Publish to Chrome Web Store**, review and click **Approve**.
+
+The job fails without uploading if the tag doesn't match the manifest version. Don't release while a previous version is still in review.
+
+**If a key is ever exposed:** delete it in Google Cloud (service account → Keys) immediately, create a new one and update the secret. Removing it from git history is not enough.
+
 ## Windows note
 
 If `npx` or `npm` fail in PowerShell with "running scripts is disabled", use `npx.cmd` / `npm.cmd`, or run:

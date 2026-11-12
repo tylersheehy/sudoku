@@ -1,1 +1,9 @@
 dist/
+
+# Credentials: never commit these. Store them as GitHub Actions secrets instead.
+*service-account*.json
+*-key.json
+*credentials*.json
+client_secret*.json
+.env
+.env.*

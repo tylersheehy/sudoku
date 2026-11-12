@@ -55,7 +55,7 @@ English
 | Screenshot 1 | 1280×800 | ✅ Ready | store-screenshot-2-game-full-1280x800.png (Downloads) |
 | Screenshot 2 | 1280×800 | ✅ Ready | store-screenshot-3-lesson-1280x800.png (Downloads) |
 | Screenshot 3 | 1280×800 | ⬜ Optional | High scores dialog |
-| Small Promo Tile | 440×280 | ⬜ Not created | |
+| Small Promo Tile | 440×280 | ✅ Ready | store-promo-small-440x280.png (Downloads) |
 | Marquee Promo Tile | 1400×560 | ⬜ Not created | |
 
 ### Screenshot Notes
