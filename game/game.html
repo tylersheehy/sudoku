@@ -118,6 +118,21 @@
     <p class="rules">Each cell scores 10 points on the first try, 3 on the second and 1 on the third, then nothing. Hinted cells score nothing. The total is multiplied by the level: Easy ×1, Medium ×1.5, Hard ×2, Expert ×3, Evil ×4, Insane ×5. Only solved rounds are listed.</p>
   </div>
 </div>
+<dialog class="menu" id="newMenu" closedby="any" aria-labelledby="newMenuTitle">
+  <form method="dialog">
+    <h2 id="newMenuTitle">New game</h2>
+    <p class="menu-warn" id="newMenuWarn">Your current game will be lost.</p>
+    <div class="menu-levels">
+      <button value="easy">Easy <small>×1</small></button>
+      <button value="medium">Medium <small>×1.5</small></button>
+      <button value="hard">Hard <small>×2</small></button>
+      <button value="expert">Expert <small>×3</small></button>
+      <button value="evil">Evil <small>×4</small></button>
+      <button value="insane">Insane <small>×5</small></button>
+    </div>
+    <button value="" class="menu-cancel">Cancel</button>
+  </form>
+</dialog>
 <!-- Shared code first, then the game's own files. game-controls.js must be last. -->
 <script src="../shared/save-data.js"></script>
 <script src="../shared/solver-basics.js"></script>
@@ -126,6 +141,7 @@
 <script src="game-rules.js"></script>
 <script src="game-scores.js"></script>
 <script src="game-screen.js"></script>
+<script src="game-menu.js"></script>
 <script src="game-controls.js"></script>
 </body>
 </html>

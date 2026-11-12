@@ -17,6 +17,7 @@ sudoku/
 │   ├── game-rules.js      the rules: entering digits, undo, hints, saving
 │   ├── game-scores.js     scoring and the high-scores window
 │   ├── game-screen.js     drawing the board and buttons
+│   ├── game-menu.js       the "New game" menu for picking a difficulty
 │   └── game-controls.js   mouse, keyboard, clock, start-up (loads last)
 │
 ├── learn/             The "Learn techniques" page

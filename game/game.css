@@ -290,6 +290,37 @@ kbd {
 .mt { grid-area: mt; font-size: 12px; color: var(--muted); }
 .rules { margin: 0; font-size: 12px; color: var(--muted); }
 
+/* New game menu: a small card in the middle of the screen (the browser centres a modal <dialog>) */
+.menu {
+  width: min(100% - 32px, 280px);
+  padding: 0;
+  border: 0; border-radius: 14px;
+  background: var(--surface); color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.menu:modal { overscroll-behavior: contain; }
+.menu::backdrop {
+  background: rgba(20, 18, 15, 0.35);
+  backdrop-filter: blur(2px);
+  overflow: hidden; overscroll-behavior: contain;
+}
+.menu form { display: grid; gap: 12px; padding: 20px; }
+.menu h2 { font: 700 20px/1.1 var(--font-print); text-align: center; }
+.menu-warn { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
+.menu-levels { display: grid; gap: 6px; }
+.menu-levels button {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 10px 14px;
+  border: 0; border-radius: 10px;
+  background: var(--chip);
+  font-weight: 600;
+}
+.menu-levels button:hover { background: var(--accent-soft); }
+.menu-levels button[aria-current="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
+.menu-levels small { font-weight: 500; color: var(--muted); }
+.menu-cancel { justify-self: center; padding: 4px 10px; border: 0; background: transparent; color: var(--muted); font-weight: 600; }
+.menu-cancel:hover { color: var(--ink); }
+
 /* Practice and Learn link */
 .ptag { margin: 0; padding: 10px 14px; border-radius: 8px; background: var(--accent-soft); font-weight: 500; }
 .ptag a { color: var(--accent); font-weight: 600; }

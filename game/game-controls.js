@@ -28,7 +28,7 @@ $('#seg').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-d]');
   if (b) startNew(b.dataset.d);
 });
-$('#newBtn').addEventListener('click', () => startNew(S.diff));
+$('#newBtn').addEventListener('click', openNewMenu);
 $('#giveBtn').addEventListener('click', () => {
   if (S.status === 'playing' && !S.busy) ask('Reveal the solution? This ends the current game.', 'Give up', giveUp);
 });
@@ -48,7 +48,7 @@ veilActions.addEventListener('click', (e) => {
   if (!b) return;
   if (b.dataset.act === 'resume') pause(false);
   else if (b.dataset.act === 'keep') { S.unlimited = true; S.status = 'playing'; render(); save(); }
-  else if (b.dataset.act === 'new') newGame(S.diff);
+  else if (b.dataset.act === 'new') openNewMenu();
 });
 
 function move(key) {
@@ -66,6 +66,7 @@ function move(key) {
 }
 
 document.addEventListener('keydown', (e) => {
+  if (newMenu.open) return; // the menu handles its own keys (Tab, Enter, Esc)
   if (!scoresModal.hidden) { if (e.key === 'Escape') closeScores(); return; }
   if (e.metaKey || e.ctrlKey || e.altKey) {
     if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }

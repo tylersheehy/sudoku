@@ -165,7 +165,7 @@ https://github.com/tylersheehy/sudoku
 ### TODO later: automatic publishing from GitHub
 Workflow is written (`.github/workflows/publish.yml`); full steps in RUNNING_LOCALLY.md, "Automatic publishing". Paused 2026-11-11 while 1.0.0 is in review.
 - [ ] Wait for 1.0.0 to be approved before any automated upload
-- [ ] Push branch `connect-git-to-chrome` and merge it into `main` (contains the workflow)
+- [x] Push branch `connect-git-to-chrome` and merge it into `main` (contains the workflow; merged 2026-11-11)
 - [ ] Google Cloud (project `sudoku-for-fun-514503`): enable **Chrome Web Store API**
 - [ ] Create a service account (no roles) and a JSON key; save it outside the repo
   - Skip the OAuth consent screen (`/auth/overview`); it isn't needed for service accounts. If console pages fail to load, use an Incognito window signed into one account.
