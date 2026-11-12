@@ -1,6 +1,6 @@
 # Chrome Web Store Listing: Sudoku for Fun
 
-> Last Updated: 2026-11-11
+> Last Updated: 2026-11-12
 
 ## Store Listing
 
@@ -31,7 +31,7 @@ A "basics" lesson that explains Sudoku words like box, unit and candidate, with 
 A home page to start a new game, continue your saved one, and see your top scores
 A statistics page with games started, games won, win rate, best score and times for every difficulty
 A paper theme and a dark theme
-<!-- The last six lines are new in 1.0.1; remove them if submitting 1.0.0 again. -->
+<!-- The last six lines were added in 1.0.1. -->
 
 How to use:
 1. Click the Sudoku for Fun icon in your toolbar, or press Alt+Shift+S.
@@ -152,8 +152,8 @@ https://github.com/tylersheehy/sudoku
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
-| 1.0.1 | not yet | Home page (new game, continue, lessons, top 5 scores); Statistics page (games started, won, win rate, no-mistake wins, best score, fastest and average time, per difficulty); paper theme with dark toggle; New game difficulty menu; lesson replays, New example button, basics lesson and word tooltips. Screenshots need refreshing. | Draft |
-| 1.0.0 | 2026-11-11 | Initial release: six difficulty levels, notes, hints, undo, pause, scoring, high scores, keyboard play, 12 technique lessons. | In Review (submitted 2026-11-11) |
+| 1.0.1 | 2026-11-12 | Home page (new game, continue, lessons, top 5 scores); Statistics page (games started, won, win rate, no-mistake wins, best score, fastest and average time, per difficulty); paper theme with dark toggle; New game difficulty menu; lesson replays, New example button, basics lesson and word tooltips. Screenshots need refreshing. | Submitted via GitHub Actions (tag v1.0.1) |
+| 1.0.0 | 2026-11-11 | Initial release: six difficulty levels, notes, hints, undo, pause, scoring, high scores, keyboard play, 12 technique lessons. | Published (approved by 2026-11-12) |
 
 ## Review Notes
 
@@ -172,12 +172,12 @@ https://github.com/tylersheehy/sudoku
 
 ### TODO later: automatic publishing from GitHub
 Workflow is written (`.github/workflows/publish.yml`); full steps in RUNNING_LOCALLY.md, "Automatic publishing". Paused 2026-11-11 while 1.0.0 is in review.
-- [ ] Wait for 1.0.0 to be approved before any automated upload
+- [x] Wait for 1.0.0 to be approved before any automated upload (published 2026-11-12)
 - [x] Push branch `connect-git-to-chrome` and merge it into `main` (contains the workflow; merged 2026-11-11)
-- [ ] Google Cloud (project `sudoku-for-fun-514503`): enable **Chrome Web Store API**
-- [ ] Create a service account (no roles) and a JSON key; save it outside the repo
+- [x] Google Cloud (project `sudoku-for-fun-514503`): enable **Chrome Web Store API**
+- [x] Create a service account (no roles) and a JSON key; save it outside the repo
   - Skip the OAuth consent screen (`/auth/overview`); it isn't needed for service accounts. If console pages fail to load, use an Incognito window signed into one account.
-- [ ] Developer Dashboard → **Account**: add the service account email; note Publisher ID and item ID
-- [ ] GitHub → Settings → Environments → `chrome-web-store` with yourself as Required reviewer; add secrets `CWS_SERVICE_ACCOUNT_JSON`, `CWS_PUBLISHER_ID`, `CWS_EXTENSION_ID`
-- [ ] Delete the local JSON key file
+- [x] Developer Dashboard → **Account**: add the service account email; note Publisher ID and item ID
+- [x] GitHub → Settings → Environments → `chrome-web-store` with yourself as Required reviewer; add secrets `CWS_SERVICE_ACCOUNT_JSON`, `CWS_PUBLISHER_ID`, `CWS_EXTENSION_ID`
+- [x] Delete the local JSON key file
 - [ ] First test: bump version to 1.0.1, push tag `v1.0.1`, approve the run, check the log

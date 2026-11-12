@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Sudoku for Fun",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sudoku in its own tab: six difficulty levels, notes, hints, undo, pause, scoring, and full keyboard play.",
   "minimum_chrome_version": "116",
   "permissions": ["storage"],
