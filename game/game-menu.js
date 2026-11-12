@@ -31,12 +31,4 @@ newMenu.addEventListener('close', () => {
   else if (resume) pause(false); // cancelled: carry on where you were
 });
 
-// Clicking outside the menu closes it. Older Chrome versions don't support closedby="any", so do it by hand there.
-if (!('closedBy' in HTMLDialogElement.prototype)) {
-  newMenu.addEventListener('click', (e) => {
-    if (e.target !== newMenu) return;
-    const r = newMenu.getBoundingClientRect();
-    const inside = r.top <= e.clientY && e.clientY <= r.bottom && r.left <= e.clientX && e.clientX <= r.right;
-    if (!inside) newMenu.close();
-  });
-}
+enableLightDismiss(newMenu); // clicking outside the menu closes it

@@ -111,13 +111,16 @@ setInterval(() => {
 }, 1000);
 
 /* ---------- Boot ---------- */
-// Opened from a lesson: learn.html links here with #practice=<technique>.
+// Opened from a lesson with #practice=<technique>, or from the home page with #new=<level>.
 (async () => {
   await loadScores();
   const wanted = (/^#practice=([a-z-]+)$/.exec(location.hash) || [])[1];
+  const level = (/^#new=([a-z]+)$/.exec(location.hash) || [])[1];
+  if (wanted || level) { try { history.replaceState(null, '', location.pathname); } catch (e) { /* ignore */ } }
   if (wanted && TYPE_LEVEL[wanted]) {
-    try { history.replaceState(null, '', location.pathname); } catch (e) { /* ignore */ }
     newGame(Object.keys(DIFFS).find((k) => DIFFS[k].level === TYPE_LEVEL[wanted]), wanted);
+  } else if (level && DIFFS[level]) {
+    newGame(level);
   } else {
     const saved = await load();
     if (saved) { S = saved; render(); save(); }

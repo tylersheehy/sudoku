@@ -13,7 +13,8 @@ This project is a Chrome extension (Manifest V3). There is no build step and not
 ## Play
 
 - Click the extension's toolbar icon, or press **Alt+Shift+S**.
-- The game opens in its own tab (`game/game.html`). If it is already open, the existing tab is focused instead.
+- The home page opens in its own tab (`home/home.html`). If a Sudoku tab is already open (home, game or lessons), that tab is focused instead.
+- From home you can continue a saved game, start a new one, open the lessons, or check your high scores. The game page is `game/game.html`.
 - If the icon is hidden, click the puzzle-piece menu in Chrome's toolbar and pin **Sudoku for Fun**.
 - The learning section is `learn/learn.html`. Open it from the game's UI.
 
@@ -23,7 +24,7 @@ The folder layout is explained in [README.md](README.md).
 
 After changing any file, go to `chrome://extensions` and click the **reload** (circular arrow) button on the Sudoku card, then refresh the game tab.
 
-- Changes inside `game/`, `learn/` and `shared/` only need a tab refresh once the extension has been reloaded.
+- Changes inside `home/`, `game/`, `learn/`, `stats/` and `shared/` only need a tab refresh once the extension has been reloaded.
 - Changes to `manifest.json` or anything in `background/` always need the reload button.
 
 ## Debugging
@@ -42,7 +43,7 @@ The pages are plain HTML, so you can also open `game/game.html` directly in a br
 powershell -ExecutionPolicy Bypass -File tools/package.ps1
 ```
 
-This creates `dist/sudoku-<version>.zip` containing only what Chrome needs: `manifest.json` and the `background/`, `game/`, `learn/`, `shared/` and `icons/` folders. A new file in one of those folders is included automatically. Bump `version` in `manifest.json` before each upload. Listing text, permission justifications and the privacy policy live in `CHROMEWEBSTORE.md`.
+This creates `dist/sudoku-<version>.zip` containing only what Chrome needs: `manifest.json` and the `background/`, `home/`, `game/`, `learn/`, `stats/`, `shared/` and `icons/` folders. A new file in one of those folders is included automatically. Bump `version` in `manifest.json` before each upload. Listing text, permission justifications and the privacy policy live in `CHROMEWEBSTORE.md`.
 
 Requires Chrome 116 or later.
 

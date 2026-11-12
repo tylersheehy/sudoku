@@ -149,7 +149,7 @@ https://github.com/tylersheehy/sudoku
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
-| 1.0.1 | not yet | Paper theme with dark toggle; New game difficulty menu; lesson replays, New example button, basics lesson and word tooltips. Screenshots need refreshing. | Draft |
+| 1.0.1 | not yet | Home page (new game, continue, lessons, top 5 scores); Statistics page (games started, won, win rate, no-mistake wins, best score, fastest and average time, per difficulty); paper theme with dark toggle; New game difficulty menu; lesson replays, New example button, basics lesson and word tooltips. Screenshots need refreshing. | Draft |
 | 1.0.0 | 2026-11-11 | Initial release: six difficulty levels, notes, hints, undo, pause, scoring, high scores, keyboard play, 12 technique lessons. | In Review (submitted 2026-11-11) |
 
 ## Review Notes

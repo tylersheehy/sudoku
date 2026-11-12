@@ -2,8 +2,8 @@
 'use strict';
 
 const $ = (s) => document.querySelector(s);
-const KEY = 'pencilmark.game.v1';
-const SCORES = 'pencilmark.scores.v1';
+const KEY = SAVE_KEYS.game;
+const SCORES = SAVE_KEYS.scores;
 const POINTS = [10, 3, 1]; // first, second, third try; nothing after that
 const MAX_MISTAKES = 3;
 const PRACTICE_NAMES = {
@@ -32,13 +32,6 @@ const fresh = (diff) => ({
   score: 0, tries: zeros(), awarded: zeros(), entryId: '', rank: 0, practice: '',
 });
 let S = fresh('medium');
-
-
-const fmt = (s) => {
-  const p = (n) => String(n).padStart(2, '0');
-  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
-  return (h ? h + ':' : '') + p(m) + ':' + p(s % 60);
-};
 
 function save() {
   if (S.busy) return;
@@ -188,6 +181,8 @@ async function newGame(diff, practice) {
     clues: g.clues, hardest: g.rating.hardest, busy: false,
     practice: practice && g.hit ? practice : '',
   });
+  // Count the game as started for the statistics (practice games from the lessons don't count, as with scores).
+  if (!S.practice) { addStart(stats, S.diff); storeSet(SAVE_KEYS.stats, stats); }
   render();
   save();
 }

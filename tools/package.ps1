@@ -8,7 +8,7 @@ Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
 $version = (Get-Content manifest.json -Raw | ConvertFrom-Json).version
 
 # Everything Chrome needs: the manifest plus these folders. Nothing else is shipped.
-$folders = 'background', 'game', 'learn', 'shared', 'icons'
+$folders = 'background', 'home', 'game', 'learn', 'stats', 'shared', 'icons'
 $files = @('manifest.json')
 foreach ($d in $folders) {
   if (-not (Test-Path $d)) { throw "Missing folder: $d" }

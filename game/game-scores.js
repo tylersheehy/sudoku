@@ -2,10 +2,10 @@
 'use strict';
 
 /* ---------- Score and high scores ---------- */
-let scores = [];
+let scores = [], stats = null;
 async function loadScores() {
-  const raw = await storeGet(SCORES);
-  scores = Array.isArray(raw) ? raw.filter((e) => e && DIFFS[e.diff] && Number.isFinite(e.score)) : [];
+  scores = cleanScores(await storeGet(SCORES));
+  stats = cleanStats(await storeGet(SAVE_KEYS.stats), scores);
 }
 
 const total = () => Math.round(S.score * DIFFS[S.diff].mult);
@@ -20,6 +20,8 @@ function recordScore() {
   scores.sort((a, b) => b.score - a.score || a.seconds - b.seconds);
   scores = scores.slice(0, 50);
   storeSet(SCORES, scores);
+  addWin(stats, entry); // stats count every win, not just the top 50
+  storeSet(SAVE_KEYS.stats, stats);
   S.entryId = entry.id;
   return scores.findIndex((x) => x.id === entry.id) + 1;
 }
@@ -54,10 +56,7 @@ function renderScores() {
     if (e.id === S.entryId) li.className = 'mine';
     const rk = document.createElement('span'); rk.className = 'rk'; rk.textContent = String(k + 1);
     const sc = document.createElement('span'); sc.className = 'sc'; sc.textContent = Math.round(e.score).toLocaleString();
-    const mt = document.createElement('span'); mt.className = 'mt';
-    const d = new Date(e.date);
-    const when = isNaN(d) ? '' : ' · ' + d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-    mt.textContent = `${DIFFS[e.diff].label} ×${DIFFS[e.diff].mult} · ${fmt(e.seconds | 0)} · ${e.mistakes} ${e.mistakes === 1 ? 'mistake' : 'mistakes'} · ${e.hints} ${e.hints === 1 ? 'hint' : 'hints'}${when}`;
+    const mt = document.createElement('span'); mt.className = 'mt'; mt.textContent = scoreMeta(e);
     li.append(rk, sc, mt);
     scoreList.appendChild(li);
   });

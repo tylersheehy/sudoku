@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<script src="../shared/theme.js"></script>
+<title>Sudoku for Fun</title>
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="home.css">
+</head>
+<body>
+<main class="home">
+  <header class="masthead">
+    <div class="mast-tools">
+      <button type="button" class="theme-btn" title="Switch theme">
+        <svg class="to-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="to-light" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <span class="vh to-dark">Switch to dark theme</span>
+        <span class="vh to-light">Switch to paper theme</span>
+      </button>
+    </div>
+    <h1>Sudoku for Fun</h1>
+    <p class="dateline"><span id="today"></span></p>
+  </header>
+
+  <div class="cards">
+    <section class="card" aria-labelledby="playTitle">
+      <span class="kicker">Play</span>
+      <h2 class="card-title" id="playTitle">Puzzles</h2>
+      <p class="card-sub">Six levels, from Easy to Insane. Harder levels score more.</p>
+      <div class="play-actions">
+        <button type="button" class="btn primary big" id="newBtn">New game</button>
+        <a class="btn continue" id="continue" href="../game/game.html" hidden>Continue <span id="continueInfo"></span></a>
+      </div>
+    </section>
+
+    <a class="card" href="../learn/learn.html">
+      <span class="kicker">Learn</span>
+      <span class="card-title">Lessons</span>
+      <span class="card-sub" id="lessonInfo"></span>
+      <span class="bar" aria-hidden="true"><span id="lessonBar"></span></span>
+    </a>
+
+    <a class="card" href="../stats/stats.html">
+      <span class="kicker">Your record</span>
+      <span class="card-title">Statistics</span>
+      <span class="card-sub" id="statsInfo">Games, wins and times for every difficulty.</span>
+    </a>
+  </div>
+
+  <section class="dash" aria-labelledby="dashTitle">
+    <h2 id="dashTitle">Top 5 scores</h2>
+    <ol class="scorelist" id="scoreList"></ol>
+  </section>
+</main>
+
+<dialog class="menu" id="newMenu" closedby="any" aria-labelledby="newMenuTitle">
+  <form method="dialog">
+    <h2 id="newMenuTitle">New game</h2>
+    <p class="menu-warn" id="newMenuWarn">Your current game will be replaced.</p>
+    <div class="menu-levels" id="menuLevels"></div>
+    <button value="" class="menu-cancel">Cancel</button>
+  </form>
+</dialog>
+<script src="../shared/save-data.js"></script>
+<script src="../shared/puzzle-maker.js"></script>
+<script src="../shared/scores.js"></script>
+<script src="../shared/dialogs.js"></script>
+<script src="../learn/lesson-list.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

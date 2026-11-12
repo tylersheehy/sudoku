@@ -4,7 +4,7 @@
 
 const $ = (s) => document.querySelector(s);
 const DATA = window.LESSON_DATA || {};
-const KEY = 'sudoku.learn.v1';
+const KEY = SAVE_KEYS.lessons;
 const isSingle = (t) => t === 'naked-single' || t === 'hidden-single';
 const none = new Set();
 

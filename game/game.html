@@ -16,6 +16,7 @@
     <section class="play" aria-label="Game">
       <header class="top">
         <div class="brand">
+          <a class="home-btn" href="../home/home.html" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></a>
           <h1>Sudoku</h1>
           <button type="button" class="theme-btn" title="Switch theme">
             <svg class="to-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -78,6 +79,7 @@
         <button type="button" class="btn primary" id="newBtn">New game</button>
         <button type="button" class="btn" id="giveBtn">Give up</button>
         <button type="button" class="btn wide" id="scoresBtn">High scores</button>
+        <a class="btn" id="homeLink" href="../home/home.html">Home</a>
         <a class="btn" id="learnBtn" href="../learn/learn.html">Learn techniques</a>
       </div>
 
@@ -138,6 +140,8 @@
 <script src="../shared/solver-basics.js"></script>
 <script src="../shared/solver-techniques.js"></script>
 <script src="../shared/puzzle-maker.js"></script>
+<script src="../shared/scores.js"></script>
+<script src="../shared/dialogs.js"></script>
 <script src="game-rules.js"></script>
 <script src="game-scores.js"></script>
 <script src="game-screen.js"></script>

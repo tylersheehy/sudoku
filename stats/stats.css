@@ -1,0 +1,32 @@
+/* Statistics page. Colours, fonts, buttons and the level chips come from shared/theme.css. */
+
+.spage { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; display: grid; gap: 22px; }
+.shead { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 4px double var(--ink); }
+.shead h1 { flex: 1; font: 700 34px/1.1 var(--font-print); }
+section { display: grid; gap: 12px; }
+section h2 { font: 700 22px/1.2 var(--font-print); }
+
+.levels button { padding: 8px 14px; font-size: 14px; }
+
+/* Stat tiles: label, then the number. Large numbers keep normal (proportional) digits. */
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.tile { display: grid; gap: 4px; align-content: start; padding: 14px 16px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+.tile-label { font-size: 13px; color: var(--muted); }
+.tile-value { font: 600 30px/1.15 var(--font-num); color: var(--ink); }
+.meter { display: block; height: 6px; margin-top: 6px; border-radius: 999px; background: var(--chip); overflow: hidden; }
+.meter span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.note { margin: 0; font-size: 13px; color: var(--muted); }
+
+/* Summary table: numbers line up in columns */
+.table-wrap { overflow-x: auto; }
+.by-level { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.by-level th, .by-level td { padding: 9px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+.by-level th:first-child { text-align: left; }
+.by-level thead th { font-size: 12px; font-weight: 600; color: var(--muted); border-bottom-color: var(--ink); }
+.row-link {
+  padding: 0; border: 0; background: none;
+  font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px;
+}
+.row-link:hover { color: var(--accent); text-decoration-color: currentColor; }
+.by-level tbody tr:hover { background: var(--peer); }

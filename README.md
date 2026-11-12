@@ -11,6 +11,16 @@ A Chrome extension for playing Sudoku and learning solving techniques.
 sudoku/
 ├── manifest.json      The extension's ID card. Chrome reads this first. Must stay here.
 │
+├── home/              The home page (opens when you click the extension's icon)
+│   ├── home.html          the page itself: new game, continue, lessons, statistics, top 5 scores
+│   ├── home.css           how it looks (newspaper front page)
+│   └── home.js            the new game menu, saved game, lesson progress and scores
+│
+├── stats/             The Statistics page (opened from the home page)
+│   ├── stats.html         the page itself: a summary of all levels, and each level's numbers
+│   ├── stats.css          how it looks
+│   └── stats.js           works out games started, won, win rate, best score and times
+│
 ├── game/              The Sudoku game page
 │   ├── game.html          the page itself
 │   ├── game.css           how the game looks
@@ -31,15 +41,17 @@ sudoku/
 │   └── learn.js           how the lesson page works, including the replay (loads last)
 │
 ├── shared/            Used by both pages
-│   ├── theme.css          colours, fonts and buttons (paper and dark themes)
+│   ├── theme.css          colours, fonts, buttons, menus and score lists (paper and dark themes)
 │   ├── theme.js           the paper / dark switch
 │   ├── save-data.js       saving games, scores and progress on your computer
+│   ├── scores.js          high-score lines, times, and the statistics record
+│   ├── dialogs.js         pop-up menu helper (closing when you click outside)
 │   ├── solver-basics.js       solver part 1: the grid and the search
 │   ├── solver-techniques.js   solver part 2: rating puzzles by technique
 │   └── puzzle-maker.js        solver part 3: difficulty levels and new puzzles
 │
 ├── background/        Runs behind the scenes
-│   └── background.js      opens the game when you click the toolbar icon
+│   └── background.js      opens the home page when you click the toolbar icon
 │
 ├── icons/             The extension's icon in 4 sizes
 ├── tools/
