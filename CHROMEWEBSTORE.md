@@ -101,7 +101,8 @@ All data (the current puzzle, scores and lesson progress) is stored locally with
 ## Privacy Policy
 
 **Privacy Policy URL**
-⬜ Not hosted yet. Publish the text below at a public URL (for example a GitHub Pages site for this repo or a public Gist), then put the link here and in the dashboard.
+https://tylersheehy.github.io/sudoku/privacy
+<!-- Source: privacy.md in this repo (GitHub Pages, main branch root). Keep it in sync with the text below. -->
 
 ```
 Privacy Policy for Sudoku for Fun
@@ -118,7 +119,7 @@ You can delete all saved data at any time by removing the extension from Chrome.
 
 If these practices change, this policy will be updated and the "Last updated" date changed.
 
-Questions: [contact email]
+Questions: tyler.sheehy3@gmail.com
 ```
 
 ## Distribution
@@ -132,7 +133,7 @@ Questions: [contact email]
 ⬜ TBD
 
 **Contact Email**
-⬜ TBD (shown publicly and must be monitored)
+tyler.sheehy3@gmail.com (shown publicly and must be monitored)
 
 **Support URL**
 https://github.com/tylersheehy/sudoku/issues
@@ -155,6 +156,7 @@ https://github.com/tylersheehy/sudoku
 ### Pre-submit TODO
 - [x] Search the Web Store to confirm "Sudoku for Fun" isn't already taken (checked 2026-11-11: no exact match)
 - [ ] Take screenshots (at least one at 1280×800)
-- [ ] Host the privacy policy and fill in its URL
-- [ ] Fill in the publisher name and contact email
+- [x] Host the privacy policy and fill in its URL
+- [x] Register as a developer; contact email set
+- [ ] Fill in the publisher name above (whatever you chose at registration)
 - [ ] Run `package.ps1` and upload `dist/sudoku-1.0.0.zip`
