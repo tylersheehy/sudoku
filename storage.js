@@ -23,5 +23,9 @@ async function storeGet(key) {
 }
 
 function storeSet(key, value) {
-  chrome.storage.local.set({ [key]: value }).catch((err) => console.error('storage write failed:', err));
+  try {
+    chrome.storage.local.set({ [key]: value }).catch((err) => console.error('storage write failed:', err));
+  } catch (err) {
+    // chrome.storage is missing when a page is opened directly as a file; nothing is saved then.
+  }
 }

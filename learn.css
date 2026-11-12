@@ -58,7 +58,8 @@
 .modes button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
 
 .stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
-@media (min-width: 900px) { .stage { grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 28px; } }
+/* Side by side only when there is room for the lesson list (250px), the board (560px) and the explanation. */
+@media (min-width: 1180px) { .stage { grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 28px; } }
 .side { display: grid; gap: 12px; min-width: 0; align-content: start; }
 
 /* Candidate board */

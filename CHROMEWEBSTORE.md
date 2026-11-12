@@ -52,9 +52,9 @@ English
 | Asset | Dimensions | Status | Filename |
 |-------|-----------|--------|----------|
 | Store Icon | 128×128 PNG | ✅ Ready | icons/icon128.png |
-| Screenshot 1 | 1280×800 | ⬜ Not created | |
-| Screenshot 2 | 1280×800 | ⬜ Not created | |
-| Screenshot 3 | 1280×800 | ⬜ Not created | |
+| Screenshot 1 | 1280×800 | ✅ Ready | store-screenshot-2-game-full-1280x800.png (Downloads) |
+| Screenshot 2 | 1280×800 | ✅ Ready | store-screenshot-3-lesson-1280x800.png (Downloads) |
+| Screenshot 3 | 1280×800 | ⬜ Optional | High scores dialog |
 | Small Promo Tile | 440×280 | ⬜ Not created | |
 | Marquee Promo Tile | 1400×560 | ⬜ Not created | |
 
@@ -130,7 +130,7 @@ Questions: tyler.sheehy3@gmail.com
 ## Developer Info
 
 **Publisher Name**
-⬜ TBD
+Tyler Sheehy
 
 **Contact Email**
 tyler.sheehy3@gmail.com (shown publicly and must be monitored)
@@ -155,8 +155,8 @@ https://github.com/tylersheehy/sudoku
 
 ### Pre-submit TODO
 - [x] Search the Web Store to confirm "Sudoku for Fun" isn't already taken (checked 2026-11-11: no exact match)
-- [ ] Take screenshots (at least one at 1280×800)
+- [x] Take screenshots (at least one at 1280×800)
 - [x] Host the privacy policy and fill in its URL
 - [x] Register as a developer; contact email set
-- [ ] Fill in the publisher name above (whatever you chose at registration)
+- [x] Fill in the publisher name
 - [ ] Run `package.ps1` and upload `dist/sudoku-1.0.0.zip`
