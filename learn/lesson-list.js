@@ -1,8 +1,11 @@
-/* Learn part 1 of 3: the 12 lessons (in learning order) and the "Try it yourself" prompts. Plain text, easy to edit. */
+/* Learn: the lessons (in learning order) and the "Try it yourself" prompts. Plain text, easy to edit. */
 'use strict';
 
 /* ---------- Lessons, in the order to learn them ---------- */
 const LESSONS = [
+  { id: 'basics', group: 'Getting started', title: 'The basics',
+    what: 'The words every lesson uses: the parts of the grid, the digits you start with, and the small candidates you write in empty cells.',
+    look: 'Click each word below. The board shows you what it means.' },
   { id: 'naked-single', group: 'Singles', title: 'Naked single',
     what: 'A cell where every digit but one is already ruled out by its row, column and box. The one left has to go there.',
     look: 'Pick an empty cell and list the digits its row, column and box already contain. If only one digit is missing, that is the answer.' },

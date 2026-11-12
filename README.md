@@ -23,10 +23,12 @@ sudoku/
 ├── learn/             The "Learn techniques" page
 │   ├── learn.html         the page itself
 │   ├── learn.css          how the lessons look
-│   ├── lesson-list.js     the 12 lessons' names, descriptions and prompts
+│   ├── lesson-list.js     the lessons' names, descriptions and prompts
 │   ├── lesson-explain.js  how each technique is explained and highlighted
-│   ├── lessons-data.js    the example puzzle for each lesson
-│   └── learn.js           how the lesson page works (loads last)
+│   ├── lesson-terms.js    Sudoku words: the basics lesson and the word tooltips
+│   ├── lesson-examples.js makes a fresh example for the "New example" button
+│   ├── lessons-data.js    the first (hand-checked) example puzzle for each lesson
+│   └── learn.js           how the lesson page works, including the replay (loads last)
 │
 ├── shared/            Used by both pages
 │   ├── theme.css          colours, fonts and buttons (paper and dark themes)

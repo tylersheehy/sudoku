@@ -86,7 +86,10 @@
 .lc:nth-child(n+73) { border-bottom: 0; }
 .lc.br { border-right: 2px solid var(--line-strong); }
 .lc.bb { border-bottom: 2px solid var(--line-strong); }
-.lc.sol { color: var(--ink); font-family: var(--font-clue); font-variant-numeric: lining-nums tabular-nums; font-weight: 400; }
+/* Clues in printed serif, digits solved so far in blue pen (as in the game) */
+.lc .big { color: var(--pen); }
+.lc.sol .big { color: var(--ink); font-family: var(--font-clue); font-variant-numeric: lining-nums tabular-nums; font-weight: 400; }
+.lc { transition: background-color 0.35s; }
 .lc.unit { background: var(--peer); }
 .lc.pat { background: var(--pat); }
 .lc.wing { background: var(--wing); }
@@ -107,6 +110,50 @@
 .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .steps button { padding: 10px 12px; border-radius: 10px; border: 0; background: var(--chip); font-weight: 600; text-align: left; }
 .steps button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.steps .play { grid-column: 1 / -1; text-align: center; border: 2px solid var(--accent); background: transparent; color: var(--accent); }
+.steps .play:hover { background: var(--accent-soft); }
+
+/* Replay animations: the pattern cells pulse, removed candidates strike in, a placed digit pops in.
+   Only for people who haven't asked for reduced motion; the final look is the same either way. */
+@media (prefers-reduced-motion: no-preference) {
+  .lc.pat::after, .lc.wing::after {
+    content: ""; position: absolute; inset: 3px;
+    border: 2px solid var(--accent); border-radius: 4px;
+    opacity: 0; pointer-events: none;
+    animation: cell-pulse 0.9s ease-out;
+  }
+  .cd i.go { animation: cand-strike 0.5s ease-out; }
+  .lc.place .big { animation: digit-pop 0.45s ease-out; }
+}
+@keyframes cell-pulse { from { opacity: 0.9; scale: 0.7; } to { opacity: 0; scale: 1.06; } }
+@keyframes cand-strike { from { opacity: 0.2; scale: 1.6; } to { opacity: 1; scale: 1; } }
+@keyframes digit-pop { from { opacity: 0; scale: 0.3; } to { opacity: 1; scale: 1; } }
+
+/* "The basics": the list of words to click */
+.terms { display: flex; flex-wrap: wrap; gap: 6px; }
+.terms button { padding: 8px 12px; border-radius: 999px; border: 0; background: var(--chip); font-weight: 600; }
+.terms button:hover { background: var(--accent-soft); }
+.terms button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Words with a definition: dotted underline; click, tap or hover to see it */
+.term {
+  padding: 0; border: 0; background: none;
+  font: inherit; color: inherit;
+  text-decoration: underline dotted 1.5px; text-underline-offset: 3px;
+  cursor: help;
+}
+.term:hover { color: var(--accent); }
+.tip {
+  max-width: 260px; margin: 0; padding: 8px 10px;
+  border: 0; border-radius: 8px;
+  background: var(--ink); color: var(--surface);
+  font: 13px/1.4 var(--font-ui);
+  box-shadow: var(--shadow);
+  inset: auto; /* placed next to its word by lesson-terms.js, or by the browser below */
+}
+@supports (position-area: block-start) {
+  .tip { position-area: block-start; position-try-fallbacks: flip-block; margin-block-end: 8px; }
+}
 .try { display: grid; gap: 10px; }
 .try p { margin: 0; font-weight: 500; }
 .try-actions { display: flex; gap: 8px; flex-wrap: wrap; }

@@ -25,6 +25,10 @@ Pause, with the clock stopping automatically when you switch tabs
 Scoring with a difficulty multiplier and a high-score list
 Full keyboard play: arrow keys, digits, and single-key shortcuts for every tool
 12 interactive lessons that teach solving techniques with worked examples, "try it yourself" exercises and matching practice puzzles
+Step-by-step replays that show each technique unfold on the board
+Unlimited new examples for every technique
+A "basics" lesson that explains Sudoku words like box, unit and candidate, with definitions one click away in every lesson
+<!-- The last three lines are new in 1.0.1; remove them if submitting 1.0.0 again. -->
 
 How to use:
 1. Click the Sudoku for Fun icon in your toolbar, or press Alt+Shift+S.
@@ -145,6 +149,7 @@ https://github.com/tylersheehy/sudoku
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
+| 1.0.1 | not yet | Paper theme with dark toggle; New game difficulty menu; lesson replays, New example button, basics lesson and word tooltips. Screenshots need refreshing. | Draft |
 | 1.0.0 | 2026-11-11 | Initial release: six difficulty levels, notes, hints, undo, pause, scoring, high scores, keyboard play, 12 technique lessons. | In Review (submitted 2026-11-11) |
 
 ## Review Notes
