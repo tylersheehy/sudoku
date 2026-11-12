@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git ls-remote https://github.com/tylersheehy/sudoku.git)",
+      "PowerShell(git remote add origin https://github.com/tylersheehy/sudoku.git)",
+      "PowerShell(git add background.js game.css game.html game.js icons learn.css learn.html learn.js lessons-data.js manifest.json solver.js)",
+      "PowerShell(git commit -q -m \"Initial commit of local sudoku files`n`nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\")",
+      "PowerShell(git fetch origin 2>&1)",
+      "PowerShell(git config user.email \"tyler.sheehy3@gmail.com\")",
+      "PowerShell(git config user.name \"tylersheehy\")",
+      "PowerShell(npm view modern-web-guidance name version description repository.url maintainers bin time.modified 2>&1)"
+    ]
+  }
+}
