@@ -46,7 +46,7 @@ jobs:
 
       - name: Build package
         shell: pwsh
-        run: ./package.ps1
+        run: ./tools/package.ps1
 
       - name: Get access token
         id: token

@@ -1,0 +1,57 @@
+/* Learn part 1 of 3: the 12 lessons (in learning order) and the "Try it yourself" prompts. Plain text, easy to edit. */
+'use strict';
+
+/* ---------- Lessons, in the order to learn them ---------- */
+const LESSONS = [
+  { id: 'naked-single', group: 'Singles', title: 'Naked single',
+    what: 'A cell where every digit but one is already ruled out by its row, column and box. The one left has to go there.',
+    look: 'Pick an empty cell and list the digits its row, column and box already contain. If only one digit is missing, that is the answer.' },
+  { id: 'hidden-single', group: 'Singles', title: 'Hidden single',
+    what: 'A digit that has only one possible cell inside a row, column or box. The cell may still show other candidates, but this digit has nowhere else to go.',
+    look: 'Take one digit and one box. Cross out every cell that sees that digit elsewhere. If one cell is left, the digit goes there. Repeat for rows and columns.' },
+  { id: 'pointing', group: 'Locked candidates and pairs', title: 'Pointing pair or triple',
+    what: 'When a digit can only go in one row (or column) inside a box, that row must take its digit from this box. Every other cell in the row loses that candidate.',
+    look: 'Look at the pencil marks for one digit inside a box. If they all line up in a single row or column, the pattern points along that line.' },
+  { id: 'claiming', group: 'Locked candidates and pairs', title: 'Claiming pair or triple',
+    what: 'The reverse of pointing. When a digit in a row (or column) can only go inside one box, that box claims it. The rest of the box loses that candidate.',
+    look: 'Look at one digit along a row. If all its candidates fall inside the same box, check the rest of that box.' },
+  { id: 'naked-pair', group: 'Locked candidates and pairs', title: 'Naked pair',
+    what: 'Two cells in the same row, column or box that hold exactly the same two candidates. Those two digits must fill those two cells, so no other cell in the unit can use them.',
+    look: 'Scan a unit for two cells that each show the same two digits and nothing else.' },
+  { id: 'hidden-pair', group: 'Locked candidates and pairs', title: 'Hidden pair',
+    what: 'Two digits that appear in only the same two cells of a unit. Those cells must hold those digits, so every other candidate in them can go.',
+    look: 'Pick two digits and see whether they share exactly two cells in a unit, even if those cells show other candidates too.' },
+  { id: 'naked-triple', group: 'Triples and X-Wing', title: 'Naked triple',
+    what: 'Three cells in a unit whose candidates together are only three digits. Not every cell needs all three. Those digits belong to those cells, so the rest of the unit loses them.',
+    look: 'Find three cells in a unit that use no more than three different digits between them.' },
+  { id: 'hidden-triple', group: 'Triples and X-Wing', title: 'Hidden triple',
+    what: 'Three digits that fit only in the same three cells of a unit. Those cells are used up by those digits, so all their other candidates can go.',
+    look: 'Pick three digits and check whether they are confined to the same three cells of one unit.' },
+  { id: 'x-wing', group: 'Triples and X-Wing', title: 'X-Wing',
+    what: 'A digit appears exactly twice in each of two rows, and those four cells sit in the same two columns. The digit must take opposite corners, so it cannot appear anywhere else in those two columns. It works the same with rows and columns swapped.',
+    look: 'Choose one digit and look for rectangles where the digit has just two candidates along both of two parallel lines.' },
+  { id: 'xy-wing', group: 'Wings and fish', title: 'XY-Wing',
+    what: 'Three cells with two candidates each. The pivot holds A and B, one wing holds A and C, the other holds B and C. Whichever digit the pivot takes, one of the wings becomes C. Any cell that sees both wings cannot be C.',
+    look: 'Start from a cell with two candidates, then look at the two-candidate cells it sees for a pair that completes the chain.' },
+  { id: 'swordfish', group: 'Wings and fish', title: 'Swordfish',
+    what: 'The three-line version of X-Wing. A digit is confined to the same three columns across three rows, with two or three candidates in each row. The digit is used up in those columns, so it can go from the rest of them.',
+    look: 'Check a digit with only two or three candidates in each of three rows, all falling in the same three columns.' },
+  { id: 'forcing', group: 'Trial and error', title: 'Forcing chain',
+    what: 'Assume one candidate is true and follow only the placements that are forced. If that leads to a cell with no digit left, the assumption is false and the candidate comes out. It is guessing with a safety net, because a failed guess is a real deduction.',
+    look: 'Start from cells with two candidates. Try one, follow the singles, and look for a clash in a row, column or box.' },
+];
+
+const PROMPTS = {
+  'naked-single': 'Find a cell that has only one candidate left and click it.',
+  'hidden-single': null, // built from the example
+  'pointing': 'Find a box where one digit is confined to a single row or column. Click every candidate that removes.',
+  'claiming': 'Find a row or column where one digit is confined to a single box. Click every candidate that removes.',
+  'naked-pair': 'Find two cells in a unit with the same two candidates. Click every candidate that removes.',
+  'hidden-pair': 'Find two digits that fit in only the same two cells of a unit. Click the other candidates in those cells.',
+  'naked-triple': 'Find three cells in a unit that use only three digits between them. Click every candidate that removes.',
+  'hidden-triple': 'Find three digits that fit in only the same three cells of a unit. Click the other candidates in those cells.',
+  'x-wing': 'Find a digit with two candidates in each of two rows (or columns) that line up. Click every candidate the X-Wing removes.',
+  'xy-wing': 'Find a pivot with two candidates and two wings that complete the chain. Click the candidate the wings remove.',
+  'swordfish': 'Find a digit confined to the same three columns (or rows) across three rows (or columns). Click every candidate it removes.',
+  'forcing': 'Click any candidate that cannot be true. If you are stuck, show the pattern to see the chain.',
+};

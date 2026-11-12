@@ -1,22 +1,22 @@
 /* Learn page. Tokens come from game.css; these add the highlight colors used by the lesson board. */
 :root {
-  --wing: #ffe9a8;
-  --place: #d4f0e2;
-  --pat: #bbdefb;
+  /* Highlighter on newsprint */
+  --wing: #f1dc8c;
+  --place: #cfe6d3;
+  --pat: #cfdaf0;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --wing: #5a4a14;
-    --place: #1d4a37;
-    --pat: #2b4a7a;
-  }
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  --wing: #5a4a14;
+  --place: #1d4a37;
+  --pat: #2b4a7a;
 }
 
 .lpage { max-width: 1080px; margin: 0 auto; padding: 20px 16px 40px; display: grid; gap: 20px; }
 .lhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.lhead h1 { font: 700 24px/1.15 var(--font-num); color: var(--ink); letter-spacing: 0; }
+.lhead h1 { font: 700 26px/1.15 var(--font-print); color: var(--ink); letter-spacing: 0; }
 .sub { margin: 4px 0 0; color: var(--muted); }
 .lhead .btn { text-decoration: none; }
+.lhead-actions { display: flex; align-items: center; gap: 10px; }
 
 .lshell { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
 @media (min-width: 900px) { .lshell { grid-template-columns: 250px minmax(0, 1fr); gap: 32px; } }
@@ -49,7 +49,7 @@
 .ltop { display: grid; gap: 8px; max-width: 70ch; }
 .ltop p { margin: 0; }
 .meta { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.lesson h2 { margin: 0; font: 700 26px/1.15 var(--font-num); text-wrap: balance; }
+.lesson h2 { margin: 0; font: 700 28px/1.15 var(--font-print); text-wrap: balance; }
 .look { color: var(--muted); }
 .look b { color: var(--ink); }
 
@@ -68,8 +68,9 @@
   display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr);
   width: 100%; height: 100%;
   background: var(--cell);
-  border: 2px solid var(--line-strong);
-  border-radius: 3px;
+  border: 3px solid var(--line-strong);
+  border-radius: 0;
+  box-shadow: var(--shadow);
   overflow: hidden;
   user-select: none; -webkit-user-select: none;
 }
@@ -85,7 +86,7 @@
 .lc:nth-child(n+73) { border-bottom: 0; }
 .lc.br { border-right: 2px solid var(--line-strong); }
 .lc.bb { border-bottom: 2px solid var(--line-strong); }
-.lc.sol { color: var(--ink); font-weight: 500; }
+.lc.sol { color: var(--ink); font-family: var(--font-clue); font-variant-numeric: lining-nums tabular-nums; font-weight: 400; }
 .lc.unit { background: var(--peer); }
 .lc.pat { background: var(--pat); }
 .lc.wing { background: var(--wing); }

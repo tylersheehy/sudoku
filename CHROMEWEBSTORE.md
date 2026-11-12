@@ -145,7 +145,7 @@ https://github.com/tylersheehy/sudoku
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
-| 1.0.0 | 2026-11-11 | Initial release: six difficulty levels, notes, hints, undo, pause, scoring, high scores, keyboard play, 12 technique lessons. | Draft |
+| 1.0.0 | 2026-11-11 | Initial release: six difficulty levels, notes, hints, undo, pause, scoring, high scores, keyboard play, 12 technique lessons. | In Review (submitted 2026-11-11) |
 
 ## Review Notes
 
@@ -159,4 +159,17 @@ https://github.com/tylersheehy/sudoku
 - [x] Host the privacy policy and fill in its URL
 - [x] Register as a developer; contact email set
 - [x] Fill in the publisher name
-- [ ] Run `package.ps1` and upload `dist/sudoku-1.0.0.zip`
+- [x] Run `tools/package.ps1` and upload `dist/sudoku-1.0.0.zip`
+- [x] Submit for review (2026-11-11)
+
+### TODO later: automatic publishing from GitHub
+Workflow is written (`.github/workflows/publish.yml`); full steps in RUNNING_LOCALLY.md, "Automatic publishing". Paused 2026-11-11 while 1.0.0 is in review.
+- [ ] Wait for 1.0.0 to be approved before any automated upload
+- [ ] Push branch `connect-git-to-chrome` and merge it into `main` (contains the workflow)
+- [ ] Google Cloud (project `sudoku-for-fun-514503`): enable **Chrome Web Store API**
+- [ ] Create a service account (no roles) and a JSON key; save it outside the repo
+  - Skip the OAuth consent screen (`/auth/overview`); it isn't needed for service accounts. If console pages fail to load, use an Incognito window signed into one account.
+- [ ] Developer Dashboard → **Account**: add the service account email; note Publisher ID and item ID
+- [ ] GitHub → Settings → Environments → `chrome-web-store` with yourself as Required reviewer; add secrets `CWS_SERVICE_ACCOUNT_JSON`, `CWS_PUBLISHER_ID`, `CWS_EXTENSION_ID`
+- [ ] Delete the local JSON key file
+- [ ] First test: bump version to 1.0.1, push tag `v1.0.1`, approve the run, check the log

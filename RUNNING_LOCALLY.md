@@ -13,16 +13,18 @@ This project is a Chrome extension (Manifest V3). There is no build step and not
 ## Play
 
 - Click the extension's toolbar icon, or press **Alt+Shift+S**.
-- The game opens in its own tab (`game.html`). If it is already open, the existing tab is focused instead.
+- The game opens in its own tab (`game/game.html`). If it is already open, the existing tab is focused instead.
 - If the icon is hidden, click the puzzle-piece menu in Chrome's toolbar and pin **Sudoku for Fun**.
-- The learning section is `learn.html`. Open it from the game's UI.
+- The learning section is `learn/learn.html`. Open it from the game's UI.
+
+The folder layout is explained in [README.md](README.md).
 
 ## Edit and reload
 
 After changing any file, go to `chrome://extensions` and click the **reload** (circular arrow) button on the Sudoku card, then refresh the game tab.
 
-- Changes to `game.*`, `learn.*`, `solver.js` and `lessons-data.js` only need a tab refresh once the extension has been reloaded.
-- Changes to `manifest.json` or `background.js` always need the reload button.
+- Changes inside `game/`, `learn/` and `shared/` only need a tab refresh once the extension has been reloaded.
+- Changes to `manifest.json` or anything in `background/` always need the reload button.
 
 ## Debugging
 
@@ -32,15 +34,15 @@ After changing any file, go to `chrome://extensions` and click the **reload** (c
 
 ## Quick preview without Chrome's extension loader (optional)
 
-The pages are plain HTML, so you can also open `game.html` directly in a browser. The toolbar button, the keyboard shortcut and anything using `chrome.*` APIs will not work this way, but the game itself should.
+The pages are plain HTML, so you can also open `game/game.html` directly in a browser. The toolbar button, the keyboard shortcut and anything using `chrome.*` APIs will not work this way, but the game itself should.
 
 ## Packaging for the Chrome Web Store
 
 ```
-powershell -ExecutionPolicy Bypass -File package.ps1
+powershell -ExecutionPolicy Bypass -File tools/package.ps1
 ```
 
-This creates `dist/sudoku-<version>.zip` containing only the files Chrome needs. Bump `version` in `manifest.json` before each upload. Listing text, permission justifications and the privacy policy live in `CHROMEWEBSTORE.md`.
+This creates `dist/sudoku-<version>.zip` containing only what Chrome needs: `manifest.json` and the `background/`, `game/`, `learn/`, `shared/` and `icons/` folders. A new file in one of those folders is included automatically. Bump `version` in `manifest.json` before each upload. Listing text, permission justifications and the privacy policy live in `CHROMEWEBSTORE.md`.
 
 Requires Chrome 116 or later.
 

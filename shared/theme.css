@@ -1,0 +1,98 @@
+/* Shared look for every page: colours, fonts, the theme button, page basics and buttons.
+   Each page then adds its own stylesheet (game/game.css, learn/learn.css). */
+/* Theme: newspaper paper by default. theme.js sets <meta name="color-scheme"> to "dark" when the
+   user switches, and the :has() rule below swaps the tokens. Without JS the page stays paper. */
+:root {
+  /* Newsprint */
+  --bg: #ece6d9;            /* page around the puzzle */
+  --surface: #f6f2e9;       /* cards, dialogs */
+  --cell: #faf7f0;          /* the puzzle paper */
+  --ink: #1d1b18;           /* printed black */
+  --muted: #6c665b;
+  --line: #bfb7a6;          /* thin cell rules */
+  --line-strong: #1d1b18;   /* box rules, printed heavy */
+  --pen: #1f4fb8;           /* your answers: blue ballpoint */
+  --accent: #1f4fb8;
+  --accent-ink: #ffffff;
+  --accent-soft: #d6def0;   /* selected cell */
+  --peer: #efe9dc;          /* same row, column, box */
+  --same: #e0d7c3;          /* same digit */
+  --bad: #b3261e;           /* red pen */
+  --bad-bg: #f2d9d2;
+  --good: #2d7a4b;
+  --chip: #e4ddce;          /* buttons */
+  --veil: rgba(246, 242, 233, 0.95);
+  --shadow: 0 1px 2px rgba(60, 48, 30, 0.16), 0 6px 18px rgba(60, 48, 30, 0.10);
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-print: Georgia, "Times New Roman", "Iowan Old Style", serif;   /* printed headings */
+  --font-clue: Cambria, "Times New Roman", "Iowan Old Style", serif;    /* printed clue digits (lining figures) */
+  --font-num: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; /* pen digits, stats */
+  color-scheme: light;
+}
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  --bg: #1b2230;
+    --surface: #232c3d;
+    --cell: #202838;
+    --ink: #e6ebf4;
+    --muted: #8d9ab0;
+    --line: #3a4660;
+    --line-strong: #8da0c0;
+    --accent: #5aa9ff;
+    --accent-ink: #0e1624;
+    --accent-soft: #2b4a7a;
+    --peer: #27324a;
+    --same: #33476e;
+    --bad: #ff7a8a;
+    --bad-bg: #4a2430;
+    --good: #4cc790;
+    --chip: #2b364b;
+    --veil: rgba(27, 34, 48, 0.94);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 14px rgba(0, 0, 0, 0.35);
+    --pen: #5aa9ff;
+    color-scheme: dark;
+}
+
+/* Theme button: both icons are in the markup; show the one for the theme you'd switch to. */
+.brand { display: flex; align-items: center; gap: 10px; }
+.theme-btn {
+  position: relative;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 50%;
+  background: var(--chip); color: var(--ink);
+}
+.theme-btn:hover { color: var(--accent); }
+.theme-btn > * { grid-area: 1 / 1; }
+.theme-btn .to-light { display: none; }
+:root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-btn .to-dark { display: none; }
+:root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-btn .to-light { display: revert; }
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.4 var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+h1, h2 { margin: 0; }
+
+/* Buttons */
+.btn {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--chip);
+  font-weight: 600;
+  color: var(--ink);
+}
+.btn:hover:not(:disabled) { background: var(--accent-soft); }
+.btn:disabled { opacity: 0.4; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.08); }
+.btn.danger { background: var(--bad); color: #fff; }
