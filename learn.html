@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudoku: Learn techniques</title>
+<link rel="stylesheet" href="game.css">
+<link rel="stylesheet" href="learn.css">
+</head>
+<body>
+<main class="lpage">
+  <header class="lhead">
+    <div>
+      <h1>Learn techniques</h1>
+      <p class="sub" id="progress">0 of 12 lessons done</p>
+    </div>
+    <a class="btn" href="game.html">Back to the game</a>
+  </header>
+
+  <div class="lshell">
+    <nav class="path" aria-label="Lessons" id="path"></nav>
+
+    <article class="lesson" id="lesson" aria-live="polite">
+      <div class="ltop">
+        <p class="meta" id="lmeta"></p>
+        <h2 id="ltitle"></h2>
+        <p id="lwhat"></p>
+        <p class="look"><b>Where to look.</b> <span id="llook"></span></p>
+      </div>
+
+      <div class="modes" role="tablist" aria-label="Lesson mode">
+        <button type="button" role="tab" id="tabExample" data-mode="example">Worked example</button>
+        <button type="button" role="tab" id="tabTry" data-mode="try">Try it yourself</button>
+      </div>
+
+      <div class="stage">
+        <div class="lbwrap"><div class="lb" id="lb" role="grid" aria-label="Candidate grid"></div></div>
+
+        <div class="side">
+          <div class="steps" id="steps" role="group" aria-label="Example steps">
+            <button type="button" data-stage="1">1. Spot the pattern</button>
+            <button type="button" data-stage="2">2. Apply it</button>
+          </div>
+          <div class="try" id="tryBox" hidden>
+            <p id="prompt"></p>
+            <div class="try-actions">
+              <button type="button" class="btn primary" id="checkBtn">Check</button>
+              <button type="button" class="btn" id="clearBtn">Clear</button>
+              <button type="button" class="btn" id="showBtn">Show the pattern</button>
+            </div>
+          </div>
+          <p class="explain" id="explain" role="status"></p>
+          <div class="legend" id="legend" aria-label="Legend"></div>
+        </div>
+      </div>
+
+      <div class="lnav">
+        <a class="btn primary" id="practice" href="game.html">Practice puzzle</a>
+        <button type="button" class="btn" id="prev">Previous lesson</button>
+        <button type="button" class="btn" id="next">Next lesson</button>
+      </div>
+    </article>
+  </div>
+</main>
+<script src="solver.js"></script>
+<script src="lessons-data.js"></script>
+<script src="learn.js"></script>
+</body>
+</html>

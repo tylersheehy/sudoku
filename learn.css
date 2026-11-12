@@ -1,0 +1,120 @@
+/* Learn page. Tokens come from game.css; these add the highlight colors used by the lesson board. */
+:root {
+  --wing: #ffe9a8;
+  --place: #d4f0e2;
+  --pat: #bbdefb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wing: #5a4a14;
+    --place: #1d4a37;
+    --pat: #2b4a7a;
+  }
+}
+
+.lpage { max-width: 1080px; margin: 0 auto; padding: 20px 16px 40px; display: grid; gap: 20px; }
+.lhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.lhead h1 { font: 700 24px/1.15 var(--font-num); color: var(--ink); letter-spacing: 0; }
+.sub { margin: 4px 0 0; color: var(--muted); }
+.lhead .btn { text-decoration: none; }
+
+.lshell { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (min-width: 900px) { .lshell { grid-template-columns: 250px minmax(0, 1fr); gap: 32px; } }
+
+/* Lesson path: the order is the point, so the steps are numbered and grouped by level */
+.path { display: grid; gap: 4px; }
+.path h3 { margin: 12px 0 2px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.path h3:first-child { margin-top: 0; }
+.path button {
+  display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 8px;
+  text-align: left;
+  padding: 8px 10px;
+  border: 0; border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 500;
+}
+.path button:hover { background: var(--chip); }
+.path button[aria-current="true"] { background: var(--accent-soft); font-weight: 700; }
+.path .no { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: var(--chip); font: 600 12px var(--font-num); color: var(--muted); }
+.path button[aria-current="true"] .no { background: var(--accent); color: var(--accent-ink); }
+.path .ok { font-size: 12px; font-weight: 700; color: var(--good); }
+@media (max-width: 899px) {
+  .path { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; }
+  .path h3 { display: none; }
+  .path button { grid-template-columns: 24px auto auto; flex: none; white-space: nowrap; }
+}
+
+.lesson { display: grid; gap: 16px; min-width: 0; }
+.ltop { display: grid; gap: 8px; max-width: 70ch; }
+.ltop p { margin: 0; }
+.meta { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.lesson h2 { margin: 0; font: 700 26px/1.15 var(--font-num); text-wrap: balance; }
+.look { color: var(--muted); }
+.look b { color: var(--ink); }
+
+.modes { display: flex; gap: 18px; border-bottom: 1px solid var(--line); }
+.modes button { border: 0; background: transparent; padding: 8px 0; margin-bottom: -1px; color: var(--muted); font-weight: 600; border-bottom: 2px solid transparent; }
+.modes button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (min-width: 900px) { .stage { grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 28px; } }
+.side { display: grid; gap: 12px; min-width: 0; align-content: start; }
+
+/* Candidate board */
+.lbwrap { width: min(100%, 560px); aspect-ratio: 1; container-type: inline-size; }
+.lb {
+  display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr);
+  width: 100%; height: 100%;
+  background: var(--cell);
+  border: 2px solid var(--line-strong);
+  border-radius: 3px;
+  overflow: hidden;
+  user-select: none; -webkit-user-select: none;
+}
+.lc {
+  position: relative;
+  display: grid; place-items: center;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font-family: var(--font-num);
+  font-size: 5.6cqw;
+  line-height: 1;
+}
+.lc:nth-child(9n) { border-right: 0; }
+.lc:nth-child(n+73) { border-bottom: 0; }
+.lc.br { border-right: 2px solid var(--line-strong); }
+.lc.bb { border-bottom: 2px solid var(--line-strong); }
+.lc.sol { color: var(--ink); font-weight: 500; }
+.lc.unit { background: var(--peer); }
+.lc.pat { background: var(--pat); }
+.lc.wing { background: var(--wing); }
+.lc.place { background: var(--place); }
+.lc.place .big { color: var(--good); font-weight: 700; }
+.lc.pick { cursor: pointer; }
+.lc.pick:hover { background: var(--accent-soft); }
+.lc.chosen { box-shadow: inset 0 0 0 3px var(--accent); }
+.cd { position: absolute; inset: 3%; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); font-size: 2.45cqw; }
+.cd i { font-style: normal; display: grid; place-items: center; color: var(--muted); visibility: hidden; border-radius: 3px; }
+.cd i.on { visibility: visible; }
+.cd i.hi { color: var(--accent); font-weight: 800; background: var(--surface); box-shadow: 0 0 0 1px var(--accent); }
+.cd i.go { color: var(--bad); background: var(--bad-bg); text-decoration: line-through; text-decoration-thickness: 2px; font-weight: 800; }
+.cd i.sel { color: var(--bad); background: var(--bad-bg); font-weight: 800; box-shadow: 0 0 0 1px var(--bad); }
+.try-on .cd i.on { cursor: pointer; }
+.try-on .cd i.on:hover { background: var(--accent-soft); }
+
+.steps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.steps button { padding: 10px 12px; border-radius: 10px; border: 0; background: var(--chip); font-weight: 600; text-align: left; }
+.steps button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.try { display: grid; gap: 10px; }
+.try p { margin: 0; font-weight: 500; }
+.try-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.explain { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--chip); min-height: 3em; }
+.explain.good { background: var(--place); }
+.explain.bad { background: var(--bad-bg); }
+.explain b { font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; border: 1px solid var(--line); }
+
+.lnav { display: flex; gap: 8px; flex-wrap: wrap; }
+.lnav .btn { text-decoration: none; display: inline-block; }

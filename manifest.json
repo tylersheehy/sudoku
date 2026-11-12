@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Sudoku",
+  "version": "1.0.0",
+  "description": "Sudoku in its own tab: five difficulty levels, notes, hints, undo, pause, scoring, and full keyboard play.",
+  "action": {
+    "default_title": "Play Sudoku"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Open Sudoku"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

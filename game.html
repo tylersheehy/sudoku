@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudoku</title>
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<main class="app">
+  <div class="shell">
+
+    <section class="play" aria-label="Game">
+      <header class="top">
+        <h1>Sudoku</h1>
+        <div class="seg" id="seg" role="radiogroup" aria-label="Difficulty">
+          <button type="button" role="radio" data-d="easy">Easy</button>
+          <button type="button" role="radio" data-d="medium">Medium</button>
+          <button type="button" role="radio" data-d="hard">Hard</button>
+          <button type="button" role="radio" data-d="expert">Expert</button>
+          <button type="button" role="radio" data-d="evil">Evil</button>
+          <button type="button" role="radio" data-d="insane">Insane</button>
+        </div>
+      </header>
+
+      <div class="status">
+        <div class="stat"><span class="k">Mistakes</span><span class="val" id="mist">0 / 3</span></div>
+        <div class="stat" id="scoreStat"><span class="k">Score <span class="mult" id="mult">×1</span></span><span class="val"><span id="score">0</span><span class="gain" id="gain" aria-live="polite"></span></span></div>
+        <div class="stat"><span class="k">Hardest step</span><span class="val small" id="hardest">–</span></div>
+        <div class="stat"><span class="k">Time</span><span class="val" id="time">00:00</span></div>
+        <button type="button" class="icon-btn" id="pauseBtn" aria-label="Pause (P)" title="Pause (P)"></button>
+      </div>
+
+      <p class="ptag" id="practiceTag" hidden></p>
+
+      <div class="boardwrap">
+        <div class="board" id="board" role="grid" aria-label="Sudoku board"></div>
+        <div class="veil" id="veil" hidden>
+          <h2 id="veilTitle"></h2>
+          <p id="veilText"></p>
+          <div class="veil-actions" id="veilActions"></div>
+        </div>
+      </div>
+
+      <p class="banner" id="banner" role="status" hidden></p>
+    </section>
+
+    <aside class="panel" aria-label="Controls">
+      <div class="tools" id="tools">
+        <button type="button" class="tool" data-tool="undo" title="Undo (Z)"><span data-icon="undo"></span><span>Undo</span></button>
+        <button type="button" class="tool" data-tool="erase" title="Erase (Backspace)"><span data-icon="erase"></span><span>Erase</span></button>
+        <button type="button" class="tool" data-tool="notes" id="notesBtn" aria-pressed="false" title="Notes (N)"><span data-icon="pencil"></span><span>Notes</span><b class="badge" id="notesBadge">Off</b></button>
+        <button type="button" class="tool" data-tool="hint" id="hintBtn" title="Hint (H)"><span data-icon="bulb"></span><span>Hint</span><b class="badge" id="hintBadge">3</b></button>
+      </div>
+
+      <div class="pad" id="pad" aria-label="Number pad"></div>
+
+      <div class="confirm" id="confirm" hidden>
+        <p id="confirmMsg"></p>
+        <div class="confirm-actions">
+          <button type="button" class="btn" id="confirmNo">Cancel</button>
+          <button type="button" class="btn danger" id="confirmYes">Confirm</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn primary" id="newBtn">New game</button>
+        <button type="button" class="btn" id="giveBtn">Give up</button>
+        <button type="button" class="btn wide" id="scoresBtn">High scores</button>
+        <a class="btn" id="learnBtn" href="learn.html">Learn techniques</a>
+      </div>
+
+      <section class="keys" aria-label="Keyboard shortcuts">
+        <h3>Keyboard</h3>
+        <dl>
+          <div><dt><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd></dt><dd>Move</dd></div>
+          <div><dt><kbd>1</kbd>–<kbd>9</kbd></dt><dd>Enter digit</dd></div>
+          <div><dt><kbd>Shift</kbd>+<kbd>1</kbd>–<kbd>9</kbd></dt><dd>Opposite of notes mode</dd></div>
+          <div><dt><kbd>N</kbd></dt><dd>Toggle notes mode</dd></div>
+          <div><dt><kbd>⌫</kbd> <kbd>0</kbd> <kbd>E</kbd></dt><dd>Erase</dd></div>
+          <div><dt><kbd>Z</kbd></dt><dd>Undo</dd></div>
+          <div><dt><kbd>H</kbd></dt><dd>Hint</dd></div>
+          <div><dt><kbd>P</kbd></dt><dd>Pause or resume</dd></div>
+          <div><dt><kbd>Esc</kbd></dt><dd>Deselect or cancel</dd></div>
+        </dl>
+      </section>
+    </aside>
+
+  </div>
+</main>
+<div class="modal" id="scoresModal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="scoresTitle">
+    <div class="sheet-head">
+      <h2 id="scoresTitle">High scores</h2>
+      <button type="button" class="icon-btn" id="scoresClose" aria-label="Close high scores">&times;</button>
+    </div>
+    <div class="chips" id="scoreFilter" role="group" aria-label="Filter by difficulty">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="easy" aria-pressed="false">Easy</button>
+      <button type="button" data-f="medium" aria-pressed="false">Medium</button>
+      <button type="button" data-f="hard" aria-pressed="false">Hard</button>
+      <button type="button" data-f="expert" aria-pressed="false">Expert</button>
+      <button type="button" data-f="evil" aria-pressed="false">Evil</button>
+      <button type="button" data-f="insane" aria-pressed="false">Insane</button>
+    </div>
+    <ol class="scorelist" id="scoreList"></ol>
+    <p class="rules">Each cell scores 10 points on the first try, 3 on the second and 1 on the third, then nothing. Hinted cells score nothing. The total is multiplied by the level: Easy ×1, Medium ×1.5, Hard ×2, Expert ×3, Evil ×4, Insane ×5. Only solved rounds are listed.</p>
+  </div>
+</div>
+<script src="solver.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
